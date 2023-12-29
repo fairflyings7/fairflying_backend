@@ -1,0 +1,93 @@
+{
+    "user":"name",
+    "uid":"2312421412412",
+    "age":20,
+    "requested_flights":[
+        {
+            "details":{
+                "ChildCount":"0",
+                "InfantCount":"0",
+                "JourneyType":"1",
+                "Segments":[  
+                    {  
+                        "Origin":"DEL",
+                        "Destination":"BOM",
+                        "FlightCabinClass":"1",
+                        "PreferredDepartureTime":"2023-06-26T00:00:00",
+                        "PreferredArrivalTime":"2023-06-26T00:00:00"
+                    }
+                ]
+            },
+            "payment":{
+                "status":"pending",
+                "id":"12124"
+            }
+        }
+    ],
+    "past_flights":[
+        {
+            "booking_detials":{
+                "TraceId": "XXX",
+                "ResultIndex": "XXXX",
+                "Passengers":[
+                    {
+                        "Title":"Mr",
+                        "FirstName":"SRDV",
+                        "LastName":"Support",
+                        "PaxType":"1",
+                        "DateOfBirth":"1992-03-12",
+                        "Gender":"1",
+                        "PassportNo":"",
+                        "PassportExpiry":"",
+                        "AddressLine1":"Test",
+                        "City":"Kolkata",
+                        "CountryCode":"IN",
+                        "CountryName":"India",
+                        "ContactNo":"9632587410",
+                        "Email":"support@srdvtechnologies.com",
+                        "IsLeadPax":"True",
+                        "Fare": {
+                            "BaseFare": 2526,
+                            "Tax": 920,
+                            "TransactionFee": "0",
+                            "YQTax": 400,
+                            "AdditionalTxnFeeOfrd": 0,
+                            "AdditionalTxnFeePub": 0,
+                            "AirTransFee": "0"
+                        }	
+                    },
+                    {
+                        "Title":"Master",
+                        "FirstName":"Srdvtechnologies",
+                        "LastName":"Support",
+                        "PaxType":"2",
+                        "DateOfBirth":"2015-03-12",
+                        "Gender":"1",
+                        "PassportNo":"",
+                        "PassportExpiry":"",
+                        "AddressLine1":"Test",
+                        "City":"Kolkata",
+                        "CountryCode":"IN",
+                        "CountryName":"India",
+                        "ContactNo":"9632587410",
+                        "Email":"support@srdvtechnologies.com",
+                        "IsLeadPax":"False",
+                        "Fare": {
+                            "BaseFare": 2526,
+                            "Tax": 920,
+                            "TransactionFee": "0",
+                            "YQTax": 400,
+                            "AdditionalTxnFeeOfrd": 0,
+                            "AdditionalTxnFeePub": 0,
+                            "AirTransFee": "0"
+                        }	
+                    }
+                ]
+            },
+            "payment_details":{
+                "PaymentType":"CreditCard"
+            }
+
+        }
+    ]
+}
