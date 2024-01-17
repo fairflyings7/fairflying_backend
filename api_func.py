@@ -132,16 +132,16 @@ def LLC_ticket_Req(data):
         "ResultIndex": data["ResultIndex"]
     }
     resp = Fare_quote(fare_quote_data)
-    print(resp)
-    if resp['Error']['ErrorCode']!= '0':
+    # print(resp)
+    if resp['Error']['ErrorCode'] != '0':
         print(resp)
         return None,501
     updated_data = merged_dict
     for i in range(len(data['Passengers'])):
         updated_data["Passengers"][i]['Fare'] = resp['Results']['Fare']
     # try:
-    print("request - ",json.dumps(updated_data),"\n\n")
-    response = requests.post(api_url, json= json.dumps(updated_data), headers=headers)
+    print("request - ",json.dumps(updated_data, indent=2),"\n\n")
+    response = requests.post(api_url, json= updated_data, headers=headers)
 
     if response.status_code == 200:
         response_data = response.json()
@@ -149,17 +149,20 @@ def LLC_ticket_Req(data):
         with open('output.json', "w") as json_file:
             json.dump(response_data, json_file, indent=4)
         print("Headers - ",headers,"\n\n")
-        try:
-            with open("Flight_API/bookingSuccess.json", 'r') as file:
-                data = json.load(file)
-            print("done")
-            return data
-        except FileNotFoundError:
-            print(f"File bookingSuccess.json not found.")
+        if response_data['Error']['ErrorCode']!= '0':
+            # print(resp)
+            try:
+                with open("Flight_API/bookingSuccess.json", 'r') as file:
+                    data = json.load(file)
+                print("done")
+                return data
+            except FileNotFoundError:
+                print(f"File bookingSuccess.json not found.")
+                return None
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON in bookingSuccess.json': {e}")
+            return None,501
             return None
-        except json.JSONDecodeError as e:
-            print(f"Error decoding JSON in '{file_path}': {e}")
-        return None
         return response_data
 
     else:

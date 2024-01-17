@@ -37,6 +37,7 @@ def search_fn():
 def booking_function():
     res = request.get_json()
     data = res['data']
+    # print(json.dumps(data, indent=2))
     # print(data)
     # print(type(data))
     # user_res = {
@@ -117,3 +118,34 @@ import razorpay
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+'''
+company name
+company add
+
+pnr
+booking id / TICKET NUMBER
+
+passenger details
+    name
+    add
+    email
+    number etc
+
+flight detials
+    airline name
+    logo
+    numver
+    from - to
+    date arr-dep
+
+    meal & bagage [default / custom]
+
+price 
+    base
+    tax
+    publishedFair {taken ferom customer}
+
+
+    offered fair {deducted from our side}
+'''
