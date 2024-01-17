@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "flight-project-freelance",
+  "private_key_id": "cd2d65bfdc78f52177df2ddbdd544e7c9a81108f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDP+tKc0ofCyAVn\nugpQdO6fN/wlTF3rAy88F4eflyggmT2a9VyiuO6066TtD1QCZ+vypZPyCupvblhy\nqSKGdJmXiO1eOn5BgPs9bnEoLE6nrMm/quesy1ocGSDNItB3n11ajjO+aJ+D+cdq\nPq8C6wupfkYR3pkyHEoBEGuVtSU6wannmAoNkYK6EDFm9BurCA6i8BflJylKy08X\nXIqZ6G8fUI2ZIMmQtDUb1/hbgqJQh/fAKqQZ3DaMuMjXpQfMXf2HuSzugtOqVT34\n8qjpHA5ClPFsoY+Dkppc4wINxoOjsgax/nGn5YxHZz53/nOowx7KkMyoU6y7M0AK\nMWoTsXvZAgMBAAECggEAAwEL2f9J/fii6FnF9J3NxQ+7VQQWfrKl8+Ognj/iEN95\nxfNZllGexA77y79LDrpWzINTAN3ivz+MKELUaHYGcmuERzZH1NUiu+NMn+CM9cvP\ngbTbohGxYGLGCCSCt5meEPTpHyzWcgLxfBHB+CQyP81ewHsTQieps3x721aZnjC/\ngqmvogva1CfdUgFziy7XD83FWoOHvZWnGZyIxVIYdHlb9Bk7NBdEqITmTTuF5+OT\nP+v9VyW+sK/TBYnvPAMKz1L7U5QFz6pk0PBSfgx3gDKndLuw3Il5eOEnVjXfHEkv\n2MNGLEpJvN/LKkyOUevm6ZmrbZMwsAcoDDcYXyTj4QKBgQDu0kfsZnh7XVNSNMBT\nCVBe287jUvA360VNXSW1IEFb+ZTseIhWpYBmu5fmSMqFNptZ8hBJ4I4FwnlNAzhK\nb/vPlQ7MiVVznePgm+FDMNKF8k1CUxlfbanWwDo2djpgmcQ5wbMydGAcLzvODZnT\nImVghQbNVco8wITKwHzHFMIwOQKBgQDe8J2vL13AvgITZCjACvtUmj/BdUaX1Aq9\neQDQCcNCuZwCFulLcxp0AckPbziq98l9dIZAoXecaFjH0zg8PjBmb+7bbTrKpneo\nQGX15XX4xRDYeQ6aGhPlWrT5VQglS38W4dxRiiNuftvRvzdDZm2+Z/9KZzoYZqCC\npDqLvcpooQKBgQDqeGuCzkwlmkfOotnb7H4K07W4e9o6nHNK9FOsE4H34f7zd5cr\nsotw0WbeAcNLrIQzd7PERIJLZ1aeZLXkZzOL5yVDbOYHgBGVmJU92XYnae+uWVXE\n2i7wF4RPqh3Ab9c2eVUNCTK/GSSXNcU7hD6R16kI+dx3bvAw+3DGKDxLCQKBgGb0\nJU22iQwucxTzZyIwsBpE1XaIqx4IbSFM1QQ9ze9tec85N2mBcVDrVieLjFbf8Su/\neRQ1vN/9DCrTrx+a9I0J2ft5OPJG5/FKNAvXeKB2mS3u0cB2lIORXQvbqdRXRgyS\nJ0V8jppDeU4miOXWUo3gxvNcMmb8Vdme7+6CqguhAoGBAIM4gnDUXcuWzknF2kBd\nIT9FUoA3rXvgFa67ax9/uraM34X5YLV5TPoQf3tMDhoDjF8jwRSWSkbgEHgu4L9V\ndjHAfQYV4lJ6mqj0RTKkcSQCL5dYUh63SE9hGd7WSZRDNXXoFen7P5thHv8f8XBC\nFXYuFVpXT8csHZR0iZc+qxgk\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-gbtwm@flight-project-freelance.iam.gserviceaccount.com",
+  "client_id": "107923597924641897998",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-gbtwm%40flight-project-freelance.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

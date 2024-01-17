@@ -13,22 +13,25 @@ API_Token = os.getenv("API-Token")
 
 headers = {
     'Content-Type': 'application/json',
-    'Authorization': API_Token,
+    # 'Authorization': API_Token,
     'API-Token': API_Token
 }
 
-'''
-  https://ipapi.co/json/
-  https://api.ipify.org?format=json
-  https://ip.seeip.org/jsonip
 
-'''
 
 def get_ip_address():
-    response = requests.get('https://api.seeip.org/jsonip')
+    '''
+    https://ipapi.co/json/
+    https://api.ipify.org?format=json
+    https://ip.seeip.org/jsonip
+
+    '''
+    response = requests.get('https://api.ipify.org?format=json')
+    # response = requests.get('https://api.seeip.org/jsonip')
     return json.loads(response.text.strip())
 
-External_ip = get_ip_address()["ip"]
+# External_ip = get_ip_address()["ip"]
+External_ip = '1.1.1.1'
 print(External_ip)
 
 
@@ -37,13 +40,15 @@ def balance_check():
     api_url = 'https://flight.srdvtest.com/v5/rest/Balance'
     payload_data = {
         "EndUserIp": External_ip,
-        "ClientId": ClientId,
+        "ClientId": str(ClientId),
         "UserName": UserName,
-        "Password": Password
+        "Password": Password,
     }
 
     try:
-        response = requests.post(api_url, json=payload_data, headers=headers)
+        print(payload_data)
+        response = requests.post(
+            api_url, json=json.dumps(payload_data), headers=headers)
 
         if response.status_code == 200:
             response_data = response.json()
@@ -56,33 +61,43 @@ def balance_check():
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
         return (f"Error: {e}")
+# print(balance_check())
 
 
-def Flight_search():
+def Flight_search(inp=None):
     api_url = 'https://flight.srdvtest.com/v8/rest/Search'
-    payload_data = {
+    head = {
         "EndUserIp": External_ip,
-        "ClientId": ClientId,
+        "ClientId": str(ClientId),
         "UserName": UserName,
         "Password": Password,
-        "AdultCount":"1",
-        "ChildCount":"0",
-        "InfantCount":"0",
-        "JourneyType":"1",
-        # 1 - oneway , 2 - return, 3 - multiCity, 4- advance search
-        "Segments":[  
-            {  
-                "Origin":"DEL",
-                "Destination":"BOM",
-                "FlightCabinClass":"1",
-                # 1 - all, 2 - economy, 3 - premium eco , 4 - business, 5 - premium, 6 -  First
-                "PreferredDepartureTime":"2023-12-26T00:00:00",
-                "PreferredArrivalTime":"2023-13-26T00:00:00"
-            }
-        ]
     }
+    if inp:
+        payload_data = {**head, **inp}
+        print(payload_data)
+    else:
+        data = {
+            "AdultCount": "1",
+            "ChildCount": "0",
+            "InfantCount": "0",
+            "JourneyType": "1",
+            # 1 - oneway , 2 - return, 3 - multiCity, 4- advance search
+            "Segments": [
+                {
+                    "Origin": "DEL",
+                    "Destination": "BOM",
+                    "FlightCabinClass": "1",
+                    # 1 - all, 2 - economy, 3 - premium eco , 4 - business, 5 - premium, 6 -  First
+                    "PreferredDepartureTime": "2024-01-26T00:00:00",
+                    "PreferredArrivalTime": "2024-01-26T00:00:00"
+                }
+            ]
+        }
+        payload_data = {**head, **data}
+        print(payload_data)
 
     try:
+        print("headers\n", headers)
         response = requests.post(api_url, json=payload_data, headers=headers)
 
         if response.status_code == 200:
@@ -92,126 +107,103 @@ def Flight_search():
             return response_data
 
         else:
-            return (f"Error: {response.status_code} - {response.text}")
+            return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
 
     except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        return (f"Error: {e}")
+        return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
+# print(json.dumps(Flight_search(), indent=4))
 
 
-print(json.dumps(Flight_search(), indent=4))
-
-def LLC_ticket_Req(search, user_args):
+def LLC_ticket_Req(data):
     api_url = 'https://flight.srdvtest.com/v8/rest/TicketLCC'
-    passengers = []
-    for i in user_args:
-        passengers.append()
     payload_data = {
         "EndUserIp": External_ip,
         "ClientId": ClientId,
         "UserName": UserName,
         "Password": Password,
-        "SrdvType": search["SrdvType"],
-        "SrdvIndex": search["SrdvIndex"],
-        "TraceId": search['TraceId'],
-        "ResultIndex": search['ResultIndex'],
-        "Passengers":[
-            {
-                "Title":"Mr",
-                "FirstName":"SRDV",
-                "LastName":"Support",
-                "PaxType":"1",
-                "DateOfBirth":"1992-03-12",
-                "Gender":"1",
-                "PassportNo":"",
-                "PassportExpiry":"",
-                "AddressLine1":"Test",
-                "City":"Kolkata",
-                "CountryCode":"IN",
-                "CountryName":"India",
-                "ContactNo":"9632587410",
-                "Email":"support@srdvtechnologies.com",
-                "IsLeadPax":"True",
-                "Fare": {
-                    "BaseFare": search['Fair']['BaseFair'],
-                    "Tax": search['Fair']['Tax'],
-                    "TransactionFee": search['Fair']['TransactionFee'],
-                    "YQTax": search['Fair']['YQTax'],
-                    "AdditionalTxnFeeOfrd": search['Fair']['AdditionalTxnFeeOfrd'],
-                    "AdditionalTxnFeePub": search['Fair']['AdditionalTxnFeePub'],
-                    "AirTransFee": search['Fair']['AirTransFee']
-                }	
-            },
-            {
-                "Title":"Master",
-                "FirstName":"Srdvtechnologies",
-                "LastName":"Support",
-                "PaxType":"2",
-                "DateOfBirth":"2015-03-12",
-                "Gender":"1",
-                "PassportNo":"",
-                "PassportExpiry":"",
-                "AddressLine1":"Test",
-                "City":"Kolkata",
-                "CountryCode":"IN",
-                "CountryName":"India",
-                "ContactNo":"9632587410",
-                "Email":"support@srdvtechnologies.com",
-                "IsLeadPax":"False",
-                "Fare": {
-                    "BaseFare": search['Fair']['BaseFair'],
-                    "Tax": search['Fair']['Tax'],
-                    "TransactionFee": search['Fair']['TransactionFee'],
-                    "YQTax": search['Fair']['YQTax'],
-                    "AdditionalTxnFeeOfrd": search['Fair']['AdditionalTxnFeeOfrd'],
-                    "AdditionalTxnFeePub": search['Fair']['AdditionalTxnFeePub'],
-                    "AirTransFee": search['Fair']['AirTransFee']
-                }	
-            }
-        ]
     }
+    merged_dict = dict(payload_data)
+    merged_dict.update(data)
 
-    try:
-        response = requests.post(api_url, json=payload_data, headers=headers)
+    fare_quote_data ={
+        "SrdvType": data["SrdvType"],
+        "SrdvIndex": data["SrdvIndex"],
+        "TraceId": data["TraceId"],
+        "ResultIndex": data["ResultIndex"]
+    }
+    resp = Fare_quote(fare_quote_data)
+    print(resp)
+    if resp['Error']['ErrorCode']!= '0':
+        print(resp)
+        return None,501
+    updated_data = merged_dict
+    for i in range(len(data['Passengers'])):
+        updated_data["Passengers"][i]['Fare'] = resp['Results']['Fare']
+    # try:
+    print("request - ",json.dumps(updated_data),"\n\n")
+    response = requests.post(api_url, json= json.dumps(updated_data), headers=headers)
 
-        if response.status_code == 200:
-            response_data = response.json()
-            print("Response:", response_data)
-            return response_data
+    if response.status_code == 200:
+        response_data = response.json()
+        print("Response - ",response_data,"\n\n")
+        with open('output.json', "w") as json_file:
+            json.dump(response_data, json_file, indent=4)
+        print("Headers - ",headers,"\n\n")
+        try:
+            with open("Flight_API/bookingSuccess.json", 'r') as file:
+                data = json.load(file)
+            print("done")
+            return data
+        except FileNotFoundError:
+            print(f"File bookingSuccess.json not found.")
+            return None
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON in '{file_path}': {e}")
+        return None
+        return response_data
 
-        else:
-            print(f"Error: {response.status_code} - {response.text}")
-            return (f"Error: {response.status_code} - {response.text}")
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        return (f"Error: {response.status_code} - {response.text}")
 
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        return (f"Error: {e}")
+    # except requests.exceptions.RequestException as e:
+    #     print(f"Error: {e}")
+    #     return (f"Error: {e}")
 
 
-def Fair_rate():
-    api_url = 'https://flight.srdvtest.com/v5/rest/Balance'
+def Fare_quote(data):
+    api_url = 'https://flight.srdvtest.com/v8/rest/FareQuote'
     payload_data = {
         "EndUserIp": External_ip,
-        "ClientId": ClientId,
+        "ClientId": str(ClientId),
         "UserName": UserName,
         "Password": Password
     }
+    merged_dict = dict(payload_data)
+    merged_dict.update(data)
+    # print(merged_dict)
+    # return None
+    # try:
+    response = requests.post(api_url, json= merged_dict, headers=headers)
 
-    try:
-        response = requests.post(api_url, json=payload_data, headers=headers)
-
-        if response.status_code == 200:
+    if response.status_code == 200:
+        # print(response)
+        try:
             response_data = response.json()
-            print("Response:", response_data)
+            # print("Response:", response_data)
             return response_data
+        except Exception as e:
+            print("error at fare quote",e)
+            return response
 
-        else:
-            print(f"Error: {response.status_code} - {response.text}")
-            return (f"Error: {response.status_code} - {response.text}")
 
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        return (f"Error: {e}")
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        return (f"Error: {response.status_code} - {response.text}")
+
+    # except requests.exceptions.RequestException as e:
+    #     print(f"Error: {e}")
+    #     return (f"Error: {e}")
 
 
 def func():

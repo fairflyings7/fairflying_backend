@@ -1,0 +1,237 @@
+{
+    "Error": {
+        "ErrorCode": "0",
+        "ErrorMessage": ""
+    },
+    "TraceId": "574",
+    "ResponseStatus": 1,
+    "SrdvType": "SingleTB",
+    "Response": {
+        "SrdvIndex": "SrdvTB",
+        "PNR": "JMTG9E",
+        "BookingId": 1552298,
+        "SSRDenied": false,
+        "SSRMessage": null,
+        "Status": 1,
+        "IsPriceChanged": false,
+        "IsTimeChanged": false,
+        "TicketStatus": 1,
+        "FlightItinerary": {
+            "BookingId": 1552298,
+            "IsManual": false,
+            "PNR": "JMTG9E",
+            "IsDomestic": true,
+            "Source": 6,
+            "Origin": "DEL",
+            "Destination": "BOM",
+            "AirlineCode": "6E",
+            "LastTicketDate": "2020-01-02T19:30:46",
+            "ValidatingAirlineCode": "6E",
+            "AirlineRemark": "",
+            "IsLCC": true,
+            "NonRefundable": false,
+            "FareType": "PUB",
+            "CreditNoteNo": null,
+            "Fare": {
+                "Currency": "INR",
+                "BaseFare": 5052,
+                "Tax": 1840,
+                "YQTax": 800,
+                "AdditionalTxnFeeOfrd": 0,
+                "AdditionalTxnFeePub": 0,
+                "PGCharge": 0,
+                "OtherCharges": 472,
+                "PublishedFare": 7364,
+                "OfferedFare": 7034.1,
+                "CommissionEarned": 122.52,
+                "TdsOnCommission": 49,
+                "ServiceFee": 0,
+                "TotalBaggageCharges": 0,
+                "TotalMealCharges": 0,
+                "TotalSeatCharges": 0,
+                "TotalSpecialServiceCharges": 0
+            },
+            "CreditNoteCreatedOn": null,
+            "Passenger": [
+                {
+                    "PaxId": 2379870,
+                    "Title": "Mr",
+                    "FirstName": "SRDV",
+                    "LastName": "Support",
+                    "PaxType": "1",
+                    "DateOfBirth": "",
+                    "Gender": "1",
+                    "PassportNo": "",
+                    "AddressLine1": "Test",
+                    "City": "Kolkata",
+                    "CountryCode": "IN",
+                    "CountryName": "India",
+                    "Nationality": "IN",
+                    "ContactNo": "9632587410",
+                    "Email": "support@srdvtechnologies.com",
+                    "IsLeadPax": true,
+                    "FFAirlineCode": null,
+                    "FFNumber": null,
+                    "Fare": {
+                        "Currency": "INR",
+                        "BaseFare": 2526,
+                        "Tax": 920,
+                        "YQTax": 400,
+                        "AdditionalTxnFeeOfrd": 0,
+                        "AdditionalTxnFeePub": 0,
+                        "PGCharge": 0,
+                        "OtherCharges": 236,
+                        "PublishedFare": 3682,
+                        "OfferedFare": 3517.05,
+                        "ServiceFee": 0,
+                        "TotalBaggageCharges": 0,
+                        "TotalMealCharges": 0,
+                        "TotalSeatCharges": 0,
+                        "TotalSpecialServiceCharges": 0
+                    },
+                    "Ticket": {
+                        "TicketId": 1817838,
+                        "TicketNumber": "JMTG9E",
+                        "IssueDate": "2020-01-02T19:00:48",
+                        "ValidatingAirline": "708",
+                        "Remarks": "",
+                        "ServiceFeeDisplayType": "ShowInTax",
+                        "Status": "OK"
+                    },
+                    "SegmentAdditionalInfo": [
+                        {
+                            "FareBasis": "L0IP",
+                            "NVA": "",
+                            "NVB": "",
+                            "Baggage": "15 KG",
+                            "Meal": "0 Platter",
+                            "Seat": "",
+                            "SpecialService": ""
+                        }
+                    ]
+                },
+                {
+                    "PaxId": 2379871,
+                    "Title": "Master",
+                    "FirstName": "Srdvtechnologies",
+                    "LastName": "Support",
+                    "PaxType": "2",
+                    "DateOfBirth": "2013-03-12",
+                    "Gender": "1",
+                    "PassportNo": "",
+                    "AddressLine1": "",
+                    "City": "",
+                    "CountryCode": "IN",
+                    "CountryName": "India",
+                    "Nationality": "IN",
+                    "ContactNo": "",
+                    "Email": "",
+                    "IsLeadPax": false,
+                    "FFAirlineCode": null,
+                    "FFNumber": null,
+                    "Fare": {
+                        "Currency": "INR",
+                        "BaseFare": 2526,
+                        "Tax": 920,
+                        "YQTax": 400,
+                        "AdditionalTxnFeeOfrd": 0,
+                        "AdditionalTxnFeePub": 0,
+                        "PGCharge": 0,
+                        "OtherCharges": 236,
+                        "PublishedFare": 3682,
+                        "OfferedFare": 3517.05,
+                        "ServiceFee": 0,
+                        "TotalBaggageCharges": 0,
+                        "TotalMealCharges": 0,
+                        "TotalSeatCharges": 0,
+                        "TotalSpecialServiceCharges": 0
+                    },
+                    "Ticket": {
+                        "TicketId": 1817839,
+                        "TicketNumber": "JMTG9E",
+                        "IssueDate": "2020-01-02T19:00:49",
+                        "ValidatingAirline": "708",
+                        "Remarks": "",
+                        "ServiceFeeDisplayType": "ShowInTax",
+                        "Status": "OK"
+                    },
+                    "SegmentAdditionalInfo": [
+                        {
+                            "FareBasis": "L0IP",
+                            "NVA": "",
+                            "NVB": "",
+                            "Baggage": "15 KG",
+                            "Meal": "0 Platter",
+                            "Seat": "",
+                            "SpecialService": ""
+                        }
+                    ]
+                }
+            ],
+            "CancellationCharges": null,
+            "Segments": [
+                {
+                    "Baggage": null,
+                    "CabinBaggage": null,
+                    "TripIndicator": 1,
+                    "SegmentIndicator": 1,
+                    "DepTime": "2020-06-26T18:35:00",
+                    "ArrTime": "2020-06-26T20:50:00",
+                    "Airline": {
+                        "AirlineCode": "6E",
+                        "AirlineName": "IndiGo",
+                        "FlightNumber": "843",
+                        "FareClass": "L",
+                        "OperatingCarrier": ""
+                    },
+                    "AirlinePNR": "",
+                    "AccumulatedDuration": "",
+                    "Origin": {
+                        "AirportCode": "DEL",
+                        "AirportName": "Indira Gandhi Airport",
+                        "Terminal": "1",
+                        "CityCode": "DEL",
+                        "CityName": "Delhi",
+                        "CountryCode": "IN",
+                        "CountryName": "India"
+                    },
+                    "Destination": {
+                        "AirportCode": "BOM",
+                        "AirportName": "Mumbai",
+                        "Terminal": "1",
+                        "CityCode": "BOM",
+                        "CityName": "Mumbai",
+                        "CountryCode": "IN",
+                        "CountryName": "India"
+                    },
+                    "Duration": 135,
+                    "GroundTime": 0,
+                    "Mile": 0,
+                    "StopOver": false,
+                    "StopPoint": "",
+                    "StopPointArrivalTime": "0001-01-01T00:00:00",
+                    "StopPointDepartureTime": "0001-01-01T00:00:00",
+                    "Craft": "320",
+                    "Remark": null,
+                    "IsETicketEligible": true,
+                    "FlightStatus": "Confirmed",
+                    "Status": "HK"
+                }
+            ],
+            "FareRules": [
+                {
+                    "Origin": "DEL",
+                    "Destination": "BOM",
+                    "Airline": "6E",
+                    "FareBasisCode": "L0IP",
+                    "FareRuleDetail": "",
+                    "FareRestriction": null
+                }
+            ],
+            "InvoiceNo": "DW/1920/46973",
+            "InvoiceStatus": 3,
+            "InvoiceCreatedOn": "2020-01-02T19:00:48",
+            "Remarks": ""
+        }
+    }
+}
