@@ -1,120 +1,316 @@
-from flask import Flask, jsonify, request
-import json
+
+from flask import Flask, jsonify, request, redirect, send_file
 from flask_cors import CORS
+from flask_mail import Mail, Message
+
+import razorpay
+
+import io
+import os
+import json
+
+from Functions import Hotels, Bus, flight, firebase
+HOTELS = Hotels()
+BUS = Bus()
+FLIGHT = flight()
+FIREBASE = firebase()
+'''
+booking flow
+
+1. create order number -> save all the pre payment data associated to it, and mail it to user saying "booking innitiated on this order number"
+2. complete payment / failed payment -> updated details of that order number, 
+3. add section in db to save generated markdown (for future ticket invoice download)
+4. mail user the success of oppeation with a link to download generated pdf invoice
+
+'''
 
 app = Flask(__name__)
 CORS(app)
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+app.config['MAIL_USE_TLS'] = True   # Set it to False if you're using SSL
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv("MAIL_USERNAME")
+
+mail = Mail(app)
+
+
+def send_email(email, subject, body):
+    try:
+        message = Message(subject=subject, recipients=[email])
+        message.body = body
+        mail.send(message)
+        return True
+    except Exception as e:
+        print("Error sending email:", str(e))
+        return False
+
+
 @app.route('/')
 def health():
-    return "hi",200
+    return "hi", 200
+
+
+@app.route('/check_flight_balace', methods=['GET'])
+def flight_balance_check():
+    res = FLIGHT.balance_check()
+    return jsonify(res), 200
+
 
 @app.route('/search_flights', methods=['POST'])
-def search_fn():
+def search_flights():
     req = request.get_json()
-    # data = {   
-    # "AdultCount":"1",
-    # "ChildCount":"0",
-    # "InfantCount":"0",
-    # "JourneyType":"1",
-    # "Segments":[  
-    #      {  
-    #         "Origin":"DEL",
-    #         "Destination":"BOM",
-    #         "FlightCabinClass":"1",
-    #         "PreferredDepartureTime":"2023-06-26T00:00:00",
-    #         "PreferredArrivalTime":"2023-06-26T00:00:00"
-    #      }
-    #   ]
-    # }
-    # import json
-    # with open("Flight_API/Search_Response.json", 'r') as file:
-    #     res = json.load(file)
-    from api_func import Flight_search
-    res = Flight_search(req['data']) 
-    return jsonify(res),200
+    res = FLIGHT.Flight_search(req['data'])
+    return jsonify(res), 200
+
 
 @app.route('/book_flight', methods=['POST'])
 def booking_function():
     res = request.get_json()
     data = res['data']
-    # print(json.dumps(data, indent=2))
-    # print(data)
-    # print(type(data))
-    # user_res = {
-    #     "Title":res["Title"],
-    #     "FirstName":res["FirstName"],
-    #     "LastName":res["LastName"],
-    #     "PaxType":res["PaxType"],
-    #     "DateOfBirth":res["DateOfBirth"],
-    #     "Gender":res["Gender"],
-    #     "PassportNo":res["PassportNo"], 
-    #     "PassportExpiry":res["PassportExpiry"],
-    #     "AddressLine1":res["AddressLine1"],
-    #     "City":res["City"],
-    #     "CountryCode":res["CountryCode"],
-    #     "CountryName":res["CountryCode"],
-    #     "ContactNo":res["ContactNo"],
-    #     "Email":res["Email"],
-    #     "IsLeadPax":res["IsLeadPax"],
-    # }
 
-    from api_func import LLC_ticket_Req
-    res = LLC_ticket_Req(data)
-    return jsonify(res),200
+    res = FLIGHT.LLC_ticket_Req(data)
+    return jsonify(res), 200
+
+
+@app.route('/search_hotels', methods=['POST'])
+def search_hotel():
+    req = request.get_json()
+    res = HOTELS.Hotel_search(req['data'])
+    return jsonify(res), 200
+
+
+@app.route('/hotelsRoomInfo', methods=['POST'])
+def hotelRoomInfo():
+    req = request.get_json()
+    res = HOTELS.RoomInfo(req['data'])
+    return jsonify(res), 200
+
+
+@app.route('/hotelsInfo', methods=['POST'])
+def hotelInfo():
+    req = request.get_json()
+    res = HOTELS.HotelInfo(req['data'])
+    return jsonify(res), 200
+
+
+@app.route('/search_bus', methods=['POST'])
+def search_buses():
+    req = request.get_json()
+    res = BUS.bus_search(req['data'])
+    return jsonify(res), 200
+
+
+@app.route('/bus_city_list', methods=['GET'])
+def bus_city_list():
+    # req = request.get_json()
+    res = BUS.bus_city_list()
+    return res, 200
+
+
+@app.route('/bus_seat_layout', methods=['POST'])
+def bus_seat_layout():
+    req = request.get_json()
+    if not req:
+        return jsonify({"desc": "requirment not fullfilled"}), 401
+
+    res = BUS.bus_seat_layout(req)
+    return res, 200
+
 
 @app.route('/create_payment_request', methods=['POST'])
 def create_payment_request():
     res = request.get_json()
-    
-    return jsonify({"resp":{"link":"https://google.com"}}),200
+    auth = request.headers.get('Authorization')
+
+    return jsonify({"resp": {"link": "https://google.com"}}), 200
+
+
 @app.route('/check_payment_status', methods=['POST'])
 def check_payment_status():
     res = request.get_json()
-    
-    return jsonify(True),200
 
-@app.route('/check_balace', methods=['POST'])
-def balance_check():
-    res = request.get_json()
-    
-    return jsonify({}),200
+    return jsonify(True), 200
 
-@app.route('/fair_quote', methods=['POST'])
-def fair_quote_check():
-    res = request.get_json()
-    
-    return jsonify({}),200
+
+@app.route('/check_bus_balace', methods=['GET'])
+def bus_balance_check():
+    res = BUS.bus_balance_check()
+    return jsonify(res), 200
+
+
+@app.route('/check_hotel_balace', methods=['GET'])
+def hotel_balance_check():
+    res = HOTELS.balance_check()
+    return jsonify(res), 200
+
 
 @app.route('/cancellation', methods=['POST'])
 def cancellation():
     res = request.get_json()
-    
-    return jsonify({}),200
 
-import razorpay
-# Replace with your Razorpay API keys
-# razorpay_client = razorpay.Client(auth=("YOUR_RAZORPAY_KEY_ID", "YOUR_RAZORPAY_KEY_SECRET"))
+    return jsonify({}), 200
 
-# @app.route("/create-order", methods=["POST"])
-# def create_order():
-#     amount = int(float(request.json["amount"]) * 100)  # Convert to paise
-#     order = razorpay_client.order.create({
-#         "amount": amount,
-#         "currency": "INR",
-#         "receipt": "order_receipt_123",  # Replace with your unique identifier
-#     })
-#     return jsonify({"order_id": order["id"], "order_amount": order["amount"]})
 
-# @app.route("/verify-payment", methods=["POST"])
-# def verify_payment():
-#     data = request.json
-#     try:
-#         razorpay_client.utility.verify_payment_signature(data)
-#         # Payment successful, handle order fulfillment here
-#         return jsonify({"status": "success"})
-#     except:
-#         # Payment verification failed
-#         return jsonify({"status": "failure"}), 400
+RAZOR_KEY = os.getenv('RAZORPAY_KEY', None)
+RAZOR_SECRET = os.getenv('RAZORPAY_SECRET', None)
+
+razorpay_client = razorpay.Client(
+    auth=(RAZOR_KEY, RAZOR_SECRET))
+
+
+@app.route("/razorpay_order", methods=['POST'])
+def PaymentView():
+    body = request.get_json()
+    metadata = body["metadata"]
+    razorpay_order = razorpay_client.order.create(
+        {"amount": int(metadata["amount"]) * 100, "currency": "INR",
+         "payment_capture": "1"}
+    )
+    newMetaData = {
+        **metadata,
+        "merchantId": RAZOR_KEY,
+        "currency": 'INR',
+        "orderId": razorpay_order["id"],
+    }
+    body = {
+        **body,
+        "metadata": newMetaData
+    }
+
+    FIREBASE.write_to_firestore(
+        id=razorpay_order["id"], data=body, collection="payments")
+
+    mail_body = 'An order is created at Fairflyings with this email address, incase of any doubt please refer to order ID ' + \
+        razorpay_order["id"] + " to further refer to this payment"
+    send_email(email=metadata["email"],
+               subject="Order Created", body=mail_body)
+    return jsonify(body), 200
+
+
+@app.route("/razorpay_callback", methods=['POST'])
+def CallbackView():
+    try:
+        response = request.get_json(force=True)
+    except Exception as e:
+        response = request.form.to_dict()
+
+    if "razorpay_signature" in response:
+        # Verifying Payment Signature
+        data = razorpay_client.utility.verify_payment_signature(response)
+
+        # if we get here True signature
+        if data:
+            payment_object = FIREBASE.read_from_firestore(
+                custom_id=response['razorpay_order_id'], collection="payments")
+
+            data = payment_object['data']
+            if payment_object["type"] == "flight":
+                res = FLIGHT.LLC_ticket_Req(data)
+            elif payment_object["type"] == "hotel":
+                block = Hotels.BlockRoom(data)
+                book = Hotels.BookRoom(data)
+                res = {
+                    "block": block,
+                    "book": book
+                }
+            elif payment_object["type"] == "bus":
+                block = BUS.BlockBus(data)
+                block = BUS.Bus_Booking_Req(data)
+
+                res = {
+                    "block": block,
+                    "book": book
+                }
+            else:
+                res = {"status": "null", "Desc": "type not selected"}
+
+            payment_object = {
+                **payment_object,
+                "metadata": {
+                    **payment_object["metadata"],
+                    "status": "Success",
+                    "payment_id": response['razorpay_payment_id'],
+                    "signature_id": response['razorpay_signature'],
+                },
+                "Booking": res
+            }
+
+            FIREBASE.write_to_firestore(
+                id=response["razorpay_order_id"], data=payment_object, collection="payments")
+
+            mail_body = 'Your order by Fairflyings has been placed successfully. please use the order ID ' + \
+                response['razorpay_order_id'] + \
+                " to further refer to this payment"
+            send_email(email=payment_object["metadata"]["email"],
+                       subject="Order Successfull", body=mail_body)
+            return redirect(os.getenv("WEB_URL")+"/booking-success?order_id=" + response['razorpay_order_id'])
+        else:
+            send_email(email=payment_object["metadata"]["email"], subject="Order Failed",
+                       body="your recent order failed, if payment deducted please refer to order id sent to you for refund")
+            return redirect(os.getenv("WEB_URL")+"/failure?order_id=" + response['razorpay_order_id'])
+
+    else:
+        error_metadata = json.loads(response.get('error[metadata]', '{}'))
+        print(json.dumps(error_metadata, indent=4))
+        payment_object = FIREBASE.read_from_firestore(
+            custom_id=error_metadata['order_id'], collection="payments")
+        payment_object = {
+            **payment_object,
+            "payment_id": error_metadata.get('payment_id'),
+            "signature_id": "None",
+            "status": "Failed",
+            "error_status": {
+                'error_code': response.get('error[code]'),
+                'error_description': response.get('error[description]'),
+                'error_source': response.get('error[source]'),
+                'error_reason': response.get('error[reason]'),
+            }
+        }
+
+        FIREBASE.write_to_firestore(
+            id=error_metadata['order_id'], data=payment_object, collection="payments")
+
+        send_email(email=payment_object["metadata"]["email"], subject="Order Failed",
+                   body="your recent order failed, if payment deducted please refer to order id sent to you for refund")
+        return redirect(os.getenv("WEB_URL")+"/failure?order_id=" + error_metadata['order_id'])
+
+
+@app.route('/get-order-info', methods=['POST'])
+def get_order_info():
+    res = request.get_json()
+    order_id = res['orderId']
+    payment_object = FIREBASE.read_from_firestore(
+        custom_id=order_id, collection="payments")
+
+    return jsonify(payment_object), 200
+
+
+@app.route('/get_pdf', methods=['post'])
+def get_pdf():
+    data = request.get_json()
+    orderId = data['orderId']
+    from report import flight_invoiceMD, get_pdf
+
+    payment_object = FIREBASE.read_from_firestore(
+        custom_id=orderId, collection="payments")
+    markdown = flight_invoiceMD(payment_object["Booking"])
+    pdf_content = get_pdf(markdown)
+    if pdf_content is not None:
+        return send_file(
+            io.BytesIO(pdf_content),
+            mimetype='application/pdf',
+            as_attachment=True,
+            download_name='generated_pdf.pdf'
+        )
+    else:
+        return "PDF generation failed.", 500
+    # except Exception as e:
+    #     print(e)
+    #     return {"Error":"An error occurred while generating the PDF"}
+
 
 if __name__ == '__main__':
     app.run(debug=True)
