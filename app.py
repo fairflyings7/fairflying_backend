@@ -96,6 +96,14 @@ def hotelInfo():
     return jsonify(res), 200
 
 
+@app.route('/hotelsbooking', methods=['POST'])
+def hotelbooking():
+    req = request.get_json()
+    block = HOTELS.BlockRoom(req['data'])
+    book = HOTELS.BookRoom(req['data'])
+    return jsonify({"blockResponse": block, "bookResponse": book}), 200
+
+
 @app.route('/search_bus', methods=['POST'])
 def search_buses():
     req = request.get_json()
@@ -117,6 +125,16 @@ def bus_seat_layout():
         return jsonify({"desc": "requirment not fullfilled"}), 401
 
     res = BUS.bus_seat_layout(req)
+    return res, 200
+
+
+@app.route('/bus_points', methods=['POST'])
+def bus_pt():
+    req = request.get_json()
+    if not req:
+        return jsonify({"desc": "requirment not fullfilled"}), 401
+
+    res = BUS.bus_boarding_point_details(req)
     return res, 200
 
 
@@ -208,21 +226,312 @@ def CallbackView():
 
             data = payment_object['data']
             if payment_object["type"] == "flight":
-                res = FLIGHT.LLC_ticket_Req(data)
+                # res = FLIGHT.LLC_ticket_Req(data)
+                res = {"Error": {"ErrorCode": "0", "ErrorMessage": ""}, "TraceId": "174278", "ResponseStatus": "1", "SrdvType": "MixAPI", "Response": {"SrdvIndex": "2", "PNR": "TESTPNR", "BookingId": 2106, "SSRDenied": "", "SSRMessage": "", "Status": "1", "IsPriceChanged": false, "IsTimeChanged": false, "TicketStatus": "1", "FlightItinerary": {"BookingId": 2106, "IsManual": false, "PNR": "TESTPNR", "IsDomestic": "Not Set", "Source": "Publish", "Origin": "DEL", "Destination": "AMD", "AirlineCode": "6E", "LastTicketDate": "", "ValidatingAirlineCode": "", "AirlineRemark": [], "IsLCC": true, "NonRefundable": false, "FareType": "Publish", "CreditNoteNo": "", "Fare": {"Currency": "INR", "BaseFare": 3691, "Tax": 1465, "YQTax": 700, "AdditionalTxnFeeOfrd": 0, "AdditionalTxnFeePub": 0, "PGCharge": 0, "OtherCharges": 0, "PublishedFare": 5156, "OfferedFare": 5156, "CommissionEarned": 0, "TdsOnCommission": 0, "ServiceFee": 0, "TotalBaggageCharges": 0, "TotalMealCharges": 0, "TotalSeatCharges": 0, "TotalSpecialServiceCharges": 0}, "CreditNoteCreatedOn": "", "Passenger": [{"PaxId": "", "Title": "Mr", "FirstName": "First", "LastName": "Name", "PaxType": "1", "DateOfBirth": "", "Gender": "", "PassportNo": "", "AddressLine1": "", "City": "", "CountryCode": "", "CountryName": "", "Nationality": "", "ContactNo": "09870123654", "Email": "navneet@srdvtechnologies.com", "IsLeadPax": "", "FFAirlineCode": "", "FFNumber": "", "Fare": {"Currency": "", "BaseFare": "", "Tax": "", "YQTax": "", "AdditionalTxnFeeOfrd": "", "AdditionalTxnFeePub": "", "PGCharge": "", "OtherCharges": "", "PublishedFare": "", "OfferedFare": "", "ServiceFee": "", "TotalBaggageCharges": "", "TotalMealCharges": "", "TotalSeatCharges": "", "TotalSpecialServiceCharges": ""}, "Ticket": {"TicketId": "", "TicketNumber": "", "IssueDate": "", "ValidatingAirline": "", "Remarks": "", "ServiceFeeDisplayType": "", "Status": ""}, "SegmentAdditionalInfo": [{"FareBasis": "", "NVA": "", "NVB": "", "Baggage": "", "Meal": "", "Seat": "", "SpecialService": ""}]}], "CancellationCharges": "", "Segments": [
+                    {"Baggage": "15 Kg (01 Piece only)", "CabinBaggage": "7 Kg", "TripIndicator": 1, "SegmentIndicator": 1, "DepTime": "2023-12-31T18:40", "ArrTime": "2023-12-31T20:05", "Airline": {"AirlineCode": "6E", "AirlineName": "IndiGo", "FlightNumber": "2501", "FareClass": "R", "OperatingCarrier": ""}, "AirlinePNR": "", "AccumulatedDuration": 245, "Origin": {"AirportCode": "DEL", "AirportName": "Delhi Indira Gandhi Intl", "Terminal": "Terminal 2", "CityCode": "DEL", "CityName": "Delhi", "CountryCode": "IN", "CountryName": "India"}, "Destination": {"AirportCode": "AMD", "AirportName": "Sardar Vallabh Bhai Patel Intl Arpt", "Terminal": "Terminal 1", "CityCode": "AMD", "CityName": "Ahmedabad", "CountryCode": "IN", "CountryName": "India"}, "Duration": 85, "GroundTime": 160, "Mile": "", "StopOver": "", "StopPoint": "", "StopPointArrivalTime": "", "StopPointDepartureTime": "", "Craft": "", "Remark": "", "IsETicketEligible": "", "FlightStatus": "", "Status": ""}, {"Baggage": "15 Kg (01 Piece only)", "CabinBaggage": "7 Kg", "TripIndicator": 1, "SegmentIndicator": 2, "DepTime": "2023-12-31T22:45", "ArrTime": "2024-01-01T00:10", "Airline": {"AirlineCode": "6E", "AirlineName": "IndiGo", "FlightNumber": "6794", "FareClass": "R", "OperatingCarrier": ""}, "AirlinePNR": "", "AccumulatedDuration": 330, "Origin": {"AirportCode": "AMD", "AirportName": "Sardar Vallabh Bhai Patel Intl Arpt", "Terminal": "Terminal 1", "CityCode": "AMD", "CityName": "Ahmedabad", "CountryCode": "IN", "CountryName": "India"}, "Destination": {"AirportCode": "BOM", "AirportName": "Chhatrapati Shivaji", "Terminal": "Terminal 2", "CityCode": "BOM", "CityName": "Mumbai", "CountryCode": "IN", "CountryName": "India"}, "Duration": 85, "GroundTime": "", "Mile": "", "StopOver": "", "StopPoint": "", "StopPointArrivalTime": "", "StopPointDepartureTime": "", "Craft": "", "Remark": "", "IsETicketEligible": "", "FlightStatus": "", "Status": ""}], "FareRules": [{"Origin": "", "Destination": "", "Airline": "", "FareBasisCode": "", "FareRuleDetail": "", "FareRestriction": ""}], "InvoiceNo": "", "InvoiceStatus": "", "InvoiceCreatedOn": "", "Remarks": "", "PartialSegmentCancellation": "Not Allowed"}}}
             elif payment_object["type"] == "hotel":
-                block = Hotels.BlockRoom(data)
-                book = Hotels.BookRoom(data)
+                # block = Hotels.BlockRoom(data)
+                # book = Hotels.BookRoom(data)
                 res = {
-                    "block": block,
-                    "book": book
+                    "block": {
+                        "BlockRoomResult": {
+                            "Error": {
+                                "ErrorCode": 0,
+                                "ErrorMessage": ""
+                            },
+                            "AvailabilityType": "Confirm",
+                            "TraceId": "1",
+                            "ResponseStatus": 1,
+                            "GSTAllowed": False,
+                            "IsPackageDetailsMandatory": False,
+                            "IsPackageFare": False,
+                            "IsPriceChanged": False,
+                            "IsCancellationPolicyChanged": False,
+                            "IsHotelPolicyChanged": True,
+                            "HotelNorms": "india - land of mystries \"//\" \"  /// \"  |<ul><li>Check-in hour 14:00 - .  Valid From 2020-04-30 through 2020-05-01Identification card at arrival.  Valid From 2020-04-30 through 2020-05-01Minimum check-in age 18.  Valid From 2020-04-30 through 2020-05-01Car park YES (without additional debit notes).  Valid From 2020-04-30 through 2020-05-01</li><li>Amendments cannot be made against this booking once your booking has been requested.</li></ul>",
+                            "HotelName": "Avtar",
+                            "AddressLine1": "Road Pahar Ganj, 3425 DB Gupta Rd, Arya  110015 DELHI India",
+                            "AddressLine2": "\n Phone No: 911123580007\n Fax : 911123587103",
+                            "StarRating": 2,
+                            "HotelPolicyDetail": "india - land of mystries \"//\" \"  /// \"  |<ul><li>Check-in hour 14:00 - .  Valid From 2020-04-30 through 2020-05-01Identification card at arrival.  Valid From 2020-04-30 through 2020-05-01Minimum check-in age 18.  Valid From 2020-04-30 through 2020-05-01Car park YES (without additional debit notes).  Valid From 2020-04-30 through 2020-05-01</li><li>Amendments cannot be made against this booking once your booking has been requested.</li></ul>",
+                            "Latitude": "28.6443589",
+                            "Longitude": "77.2128331",
+                            "BookingAllowedForRoamer": False,
+                            "HotelRoomsDetails": [
+                                {
+                                    "ChildCount": 0,
+                                    "RequireAllPaxDetails": True,
+                                    "RoomId": 0,
+                                    "RoomStatus": 0,
+                                    "RoomIndex": 1,
+                                    "RoomTypeCode": "007:92G:228:SGLyDXzGRvALLvROzROz:N:828857$#$1",
+                                    "RoomTypeName": "SINGLE DELUXE",
+                                    "RatePlanCode": "007:92G:228:SGLyDXzGRvALLvROzROz:N:828857|1",
+                                    "RatePlan": 0,
+                                    "InfoSource": "OpenCombination",
+                                    "SequenceNo": "1",
+                                    "DayRates": [
+                                        {
+                                            "Amount": 1658.17,
+                                            "Date": "2020-04-30T00:00:00"
+                                        }
+                                    ],
+                                    "SupplierPrice": None,
+                                    "Price": {
+                                        "CurrencyCode": "INR",
+                                        "RoomPrice": 1658.17,
+                                        "Tax": 0,
+                                        "ExtraGuestCharge": 0,
+                                        "ChildCharge": 0,
+                                        "OtherCharges": 248.5,
+                                        "Discount": 0,
+                                        "PublishedPrice": 1906.67,
+                                        "PublishedPriceRoundedOff": 1907,
+                                        "OfferedPrice": 1906.67,
+                                        "OfferedPriceRoundedOff": 1907,
+                                        "AgentCommission": 0,
+                                        "AgentMarkUp": 0,
+                                        "ServiceTax": 44.75,
+                                        "TDS": 0,
+                                        "ServiceCharge": 0,
+                                        "TotalGSTAmount": 44.75,
+                                        "GST": {
+                                            "CGSTAmount": 0,
+                                            "CGSTRate": 0,
+                                            "CessAmount": 0,
+                                            "CessRate": 0,
+                                            "IGSTAmount": 44.75,
+                                            "IGSTRate": 18,
+                                            "SGSTAmount": 0,
+                                            "SGSTRate": 0,
+                                            "TaxableAmount": 248.7
+                                        }
+                                    },
+                                    "RoomPromotion": "",
+                                    "Amenities": [
+                                        "Room Only"
+                                    ],
+                                    "Amenity": [],
+                                    "SmokingPreference": "NoPreference",
+                                    "BedTypes": [],
+                                    "HotelSupplements": [],
+                                    "LastCancellationDate": "2020-04-16T23:59:59",
+                                    "CancellationPolicies": [
+                                        {
+                                            "Charge": 1658,
+                                            "ChargeType": 1,
+                                            "Currency": "INR",
+                                            "FromDate": "2020-04-17T00:00:00",
+                                            "ToDate": "2020-04-20T23:59:59"
+                                        },
+                                        {
+                                            "Charge": 100,
+                                            "ChargeType": 2,
+                                            "Currency": "INR",
+                                            "FromDate": "2020-04-21T00:00:00",
+                                            "ToDate": "2020-05-01T23:59:59"
+                                        },
+                                        {
+                                            "Charge": 100,
+                                            "ChargeType": 2,
+                                            "Currency": "INR",
+                                            "FromDate": "2020-04-30T00:00:00",
+                                            "ToDate": "2020-05-01T00:00:00"
+                                        }
+                                    ],
+                                    "CancellationPolicy": "SINGLE DELUXE#^#INR 1658.00 will be charged, If cancelled between 17-Apr-2020 00:00:00 and 20-Apr-2020 23:59:59.|100.00% of total amount will be charged, If cancelled between 21-Apr-2020 00:00:00 and 01-May-2020 23:59:59.|100.00% of total amount will be charged, If cancelled between 30-Apr-2020 00:00:00 and 01-May-2020 00:00:00.|#!#",
+                                    "Inclusion": [
+                                        "Room Only"
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "book": {
+                        "BookResult": {
+                            "Error": {
+                                "ErrorCode": 0,
+                                "ErrorMessage": ""
+                            },
+                            "VoucherStatus": True,
+                            "ResponseStatus": 1,
+                            "TraceId": "1",
+                            "Status": 1,
+                            "HotelBookingStatus": "Confirmed",
+                            "InvoiceNumber": "MW/1920/17991",
+                            "ConfirmationNo": "270-300706",
+                            "BookingRefNo": "270-300706",
+                            "BookingId": 1554760,
+                            "IsPriceChanged": False,
+                            "IsCancellationPolicyChanged": False
+                        }
+                    }
                 }
             elif payment_object["type"] == "bus":
-                block = BUS.BlockBus(data)
-                block = BUS.Bus_Booking_Req(data)
+                # block = BUS.BlockBus(data)
+                # block = BUS.Bus_Booking_Req(data)
 
                 res = {
-                    "block": block,
-                    "book": book
+                    "block": {
+                        "Error": {
+                            "ErrorCode": 0,
+                            "ErrorMessage": ""
+                        },
+                        "Result": {
+                            "ResponseStatus": 1,
+                            "ArrivalTime": "02/14/2020 12:45:00",
+                            "BusType": "Leyland Non A/C Seater KingSize Family (2+2)",
+                            "DepartureTime": "02/14/2020 21:45:00",
+                            "ServiceName": "Seat Seller",
+                            "TraceId": "1",
+                            "TravelName": "TESTING ACCOUNT",
+                            "BoardingPointdetails": {
+                                "CityPointIndex": 1,
+                                "CityPointLocation": "Kalamboli Mc Donolds Hotel",
+                                "CityPointName": "Kalamboli Mc Donolds Hotel",
+                                "CityPointTime": "2020-02-14T09:55:00"
+                            },
+                            "CancelPolicy": [
+                                {
+                                    "CancellationCharge": 10,
+                                    "CancellationChargeType": 2,
+                                    "PolicyString": "Till 16:45 on 13 Feb 2020",
+                                    "FromDate": "2020-01-23T12:12:43",
+                                    "ToDate": "2020-02-13T16:45:00"
+                                },
+                                {
+                                    "CancellationCharge": 50,
+                                    "CancellationChargeType": 2,
+                                    "PolicyString": "Between 16:45 on 13 Feb 2020 - 04:45 on 14 Feb 2020",
+                                    "FromDate": "2020-02-13T16:45:00",
+                                    "ToDate": "2020-02-14T04:45:00"
+                                },
+                                {
+                                    "CancellationCharge": 100,
+                                    "CancellationChargeType": 2,
+                                    "PolicyString": "After 04:45 on 14 Feb 2020",
+                                    "FromDate": "2020-02-14T04:45:00",
+                                    "ToDate": "2020-02-14T12:45:00"
+                                }
+                            ],
+                            "Passenger": [
+                                {
+                                    "LeadPassenger": True,
+                                    "Title": "Mr",
+                                    "Address": "Modinagar",
+                                    "Age": "22",
+                                    "FirstName": "Amit",
+                                    "Gender": "1",
+                                    "IdNumber": None,
+                                    "IdType": None,
+                                    "Phoneno": "9643737502",
+                                    "Seat": {
+                                        "ColumnNo": "001",
+                                        "Height": 1,
+                                        "IsLadiesSeat": False,
+                                        "IsMalesSeat": False,
+                                        "IsUpper": False,
+                                        "RowNo": "000",
+                                        "SeatFare": 400,
+                                        "SeatIndex": 2,
+                                        "SeatName": "2",
+                                        "SeatStatus": True,
+                                        "SeatType": 1,
+                                        "Width": 1,
+                                        "Price": {
+                                            "CurrencyCode": "INR",
+                                            "BasePrice": 400,
+                                            "Tax": 0,
+                                            "OtherCharges": 0,
+                                            "Discount": 0,
+                                            "PublishedPrice": 400,
+                                            "PublishedPriceRoundedOff": 400,
+                                            "OfferedPrice": 380,
+                                            "OfferedPriceRoundedOff": 380,
+                                            "AgentCommission": 20,
+                                            "AgentMarkUp": 0,
+                                            "TDS": 8,
+                                            "GST": {
+                                                "CGSTAmount": 0,
+                                                "CGSTRate": 0,
+                                                "CessAmount": 0,
+                                                "CessRate": 0,
+                                                "IGSTAmount": 0,
+                                                "IGSTRate": 18,
+                                                "SGSTAmount": 0,
+                                                "SGSTRate": 0,
+                                                "TaxableAmount": 0
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "LeadPassenger": False,
+                                    "Title": "Mr",
+                                    "Address": "Modinagar",
+                                    "Age": "28",
+                                    "FirstName": "ramesh",
+                                    "Gender": "1",
+                                    "IdNumber": None,
+                                    "IdType": None,
+                                    "Phoneno": "1234567890",
+                                    "Seat": {
+                                        "ColumnNo": "002",
+                                        "Height": 1,
+                                        "IsLadiesSeat": False,
+                                        "IsMalesSeat": False,
+                                        "IsUpper": False,
+                                        "RowNo": "000",
+                                        "SeatFare": 400,
+                                        "SeatIndex": 3,
+                                        "SeatName": "3",
+                                        "SeatStatus": True,
+                                        "SeatType": 1,
+                                        "Width": 1,
+                                        "Price": {
+                                            "CurrencyCode": "INR",
+                                            "BasePrice": 400,
+                                            "Tax": 0,
+                                            "OtherCharges": 0,
+                                            "Discount": 0,
+                                            "PublishedPrice": 400,
+                                            "PublishedPriceRoundedOff": 400,
+                                            "OfferedPrice": 380,
+                                            "OfferedPriceRoundedOff": 380,
+                                            "AgentCommission": 20,
+                                            "AgentMarkUp": 0,
+                                            "TDS": 8,
+                                            "GST": {
+                                                "CGSTAmount": 0,
+                                                "CGSTRate": 0,
+                                                "CessAmount": 0,
+                                                "CessRate": 0,
+                                                "IGSTAmount": 0,
+                                                "IGSTRate": 18,
+                                                "SGSTAmount": 0,
+                                                "SGSTRate": 0,
+                                                "TaxableAmount": 0
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "book": {
+                        "Error": {
+                            "ErrorCode": 0,
+                            "ErrorMessage": ""
+                        },
+                        "Result": {
+                            "TraceId": "1",
+                            "BusBookingStatus": "Confirmed",
+                            "InvoiceAmount": 388,
+                            "BusId": 11836,
+                            "TicketNo": "25SYK4ET",
+                            "TravelOperatorPNR": "25SYK4ET"
+                        }
+                    }
                 }
             else:
                 res = {"status": "null", "Desc": "type not selected"}

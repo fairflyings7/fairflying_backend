@@ -158,13 +158,10 @@ class Hotels:
             "SrdvIndex": "SrdvTB",
             "ResultIndex": 9,
             "HotelCode": "92G|DEL",
-            # "EndUserIp": "1.1.1.1",
-            # "ClientId": "180120",
-            # "UserName": "Fairfly2",
-            # "Password": "Fairfly@22"
         }
         if data:
             payload_data = {**head, **data}
+            print(payload_data)
         else:
             payload_data = {**head, **sampleData}
 
@@ -415,7 +412,7 @@ class Hotels:
             payload_data = {**head, **data}
         else:
             payload_data = {**head, **sampleData}
-
+        print(json.dumps(payload_data, indent=4))
         try:
             # print("headers\n", headers)
             response = requests.post(
@@ -435,12 +432,7 @@ class Hotels:
 class Bus:
     def bus_balance_check(self):
         api_url = 'https://bus.srdvtest.com/v5/rest/Balance'
-        payload_data = {
-            "EndUserIp": External_ip,
-            "ClientId": str(ClientId),
-            "UserName": UserName,
-            "Password": Password,
-        }
+        payload_data = head
 
         try:
             print(payload_data)
@@ -462,13 +454,7 @@ class Bus:
 
     def bus_city_list(self,):
         api_url = 'https://bus.srdvtest.com/v5/rest/GetBusCityList'
-        payload_data = {
-            "EndUserIp": External_ip,
-            "ClientId": str(ClientId),
-            "UserName": UserName,
-            "Password": Password,
-        }
-
+        payload_data = head
         try:
             # print(payload_data)
             response = requests.post(
@@ -488,14 +474,8 @@ class Bus:
 
     # print(json.dumps(bus_city_list(), indent=4))
 
-    def bus_search(inp=None):
+    def bus_search(self, inp=None):
         api_url = 'https://bus.srdvtest.com/v5/rest/Search'
-        head = {
-            "EndUserIp": External_ip,
-            "ClientId": str(ClientId),
-            "UserName": UserName,
-            "Password": Password,
-        }
         if inp:
             payload_data = {**head, **inp}
             print("payload", payload_data)
@@ -509,18 +489,15 @@ class Bus:
             }
             payload_data = {**head, **data}
             # print(payload_data)
-            print("default payload", payload_data)
+            # print("default payload", payload_data)
 
         try:
-            print("headers - ", headers)
+            # print("headers - ", headers)
             response = requests.post(
                 api_url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
                 response_data = response.json()
-                with open('flight_Search.json', 'w') as f:
-                    json.dump(response_data, f)
-                print(json.dumps(response_data, indent=4))
                 return response_data
 
             else:
@@ -558,6 +535,33 @@ class Bus:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
 
     # print(json.dumps(bus_search(), indent=4))
+    def bus_boarding_point_details(self, inp=None):
+        url = 'https://bus.srdvtest.com/v5/rest/GetBoardingPointDetails'
+
+        if inp:
+            payload_data = {**head, **inp}
+            print("payload", payload_data)
+
+        else:
+            data = {
+                "TraceId": "1",
+                "ResultIndex": "1"
+            }
+            payload_data = {**head, **data}
+
+        try:
+            print("headers - ", headers)
+            response = requests.post(url, json=payload_data, headers=headers)
+
+            if response.status_code == 200:
+                response_data = response.json()
+                return response_data
+
+            else:
+                return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
+
+        except requests.exceptions.RequestException as e:
+            return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
 
     def Bus_Booking_Req(self, data):
         api_url = 'https://bus.srdvtest.com/v5/rest/Book'
@@ -699,6 +703,7 @@ class flight:
 
         if response.status_code == 200:
             response_data = response.json()
+            return {"Response": response_data, "req": payload_data, "headers": headers}
             return response_data
 
         else:
