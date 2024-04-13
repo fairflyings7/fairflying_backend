@@ -230,60 +230,60 @@ def CallbackView():
                 res = {
                     "Error":
                     {
-                        "ErrorCode": "0", 
+                        "ErrorCode": "0",
                         "ErrorMessage": ""
-                    }, 
-                    "TraceId": "174278", 
-                    "ResponseStatus": "1", 
-                    "SrdvType": "MixAPI", 
+                    },
+                    "TraceId": "174278",
+                    "ResponseStatus": "1",
+                    "SrdvType": "MixAPI",
                     "Response": {
-                        "SrdvIndex": "2", 
-                        "PNR": "TESTPNR", 
-                        "BookingId": 2106, 
-                        "SSRDenied": "", 
-                        "SSRMessage": "", 
-                        "Status": "1", 
-                        "IsPriceChanged": False, 
-                        "IsTimeChanged": False, 
-                        "TicketStatus": "1", 
+                        "SrdvIndex": "2",
+                        "PNR": "TESTPNR",
+                        "BookingId": 2106,
+                        "SSRDenied": "",
+                        "SSRMessage": "",
+                        "Status": "1",
+                        "IsPriceChanged": False,
+                        "IsTimeChanged": False,
+                        "TicketStatus": "1",
                         "FlightItinerary": {
-                            "BookingId": 2106, 
-                            "IsManual": False, 
-                            "PNR": "TESTPNR", 
-                            "IsDomestic": "Not Set", 
-                            "Source": "Publish", 
-                            "Origin": "DEL", 
-                            "Destination": "AMD", 
-                            "AirlineCode": "6E", 
-                            "LastTicketDate": "", 
-                            "ValidatingAirlineCode": "", 
-                            "AirlineRemark": [], 
-                            "IsLCC": True, 
+                            "BookingId": 2106,
+                            "IsManual": False,
+                            "PNR": "TESTPNR",
+                            "IsDomestic": "Not Set",
+                            "Source": "Publish",
+                            "Origin": "DEL",
+                            "Destination": "AMD",
+                            "AirlineCode": "6E",
+                            "LastTicketDate": "",
+                            "ValidatingAirlineCode": "",
+                            "AirlineRemark": [],
+                            "IsLCC": True,
                             "NonRefundable": False,
-                            "FareType": "Publish", 
-                            "CreditNoteNo": "", 
+                            "FareType": "Publish",
+                            "CreditNoteNo": "",
                             "Fare": {
-                                "Currency": "INR", 
-                                "BaseFare": 3691, 
-                                "Tax": 1465, 
-                                "YQTax": 700, 
-                                "AdditionalTxnFeeOfrd": 0, 
-                                "AdditionalTxnFeePub": 0, 
-                                "PGCharge": 0, 
-                                "OtherCharges": 0, 
-                                "PublishedFare": 5156, 
-                                "OfferedFare": 5156, 
-                                "CommissionEarned": 0, 
-                                "TdsOnCommission": 0, 
-                                "ServiceFee": 0, "TotalBaggageCharges": 0, 
-                                "TotalMealCharges": 0, 
-                                "TotalSeatCharges": 0, 
+                                "Currency": "INR",
+                                "BaseFare": 3691,
+                                "Tax": 1465,
+                                "YQTax": 700,
+                                "AdditionalTxnFeeOfrd": 0,
+                                "AdditionalTxnFeePub": 0,
+                                "PGCharge": 0,
+                                "OtherCharges": 0,
+                                "PublishedFare": 5156,
+                                "OfferedFare": 5156,
+                                "CommissionEarned": 0,
+                                "TdsOnCommission": 0,
+                                "ServiceFee": 0, "TotalBaggageCharges": 0,
+                                "TotalMealCharges": 0,
+                                "TotalSeatCharges": 0,
                                 "TotalSpecialServiceCharges": 0
                             }, "CreditNoteCreatedOn": "", "Passenger": [{"PaxId": "", "Title": "Mr", "FirstName": "First", "LastName": "Name", "PaxType": "1", "DateOfBirth": "", "Gender": "", "PassportNo": "", "AddressLine1": "", "City": "", "CountryCode": "", "CountryName": "", "Nationality": "", "ContactNo": "09870123654", "Email": "navneet@srdvtechnologies.com", "IsLeadPax": "", "FFAirlineCode": "", "FFNumber": "", "Fare": {"Currency": "", "BaseFare": "", "Tax": "", "YQTax": "", "AdditionalTxnFeeOfrd": "", "AdditionalTxnFeePub": "", "PGCharge": "", "OtherCharges": "", "PublishedFare": "", "OfferedFare": "", "ServiceFee": "", "TotalBaggageCharges": "", "TotalMealCharges": "", "TotalSeatCharges": "", "TotalSpecialServiceCharges": ""}, "Ticket": {"TicketId": "", "TicketNumber": "", "IssueDate": "", "ValidatingAirline": "", "Remarks": "", "ServiceFeeDisplayType": "", "Status": ""}, "SegmentAdditionalInfo": [{"FareBasis": "", "NVA": "", "NVB": "", "Baggage": "", "Meal": "", "Seat": "", "SpecialService": ""}]}], "CancellationCharges": "", "Segments": [
 
 
 
-                            {"Baggage": "15 Kg (01 Piece only)", "CabinBaggage": "7 Kg", "TripIndicator": 1, "SegmentIndicator": 1, "DepTime": "2023-12-31T18:40", "ArrTime": "2023-12-31T20:05", "Airline": {"AirlineCode": "6E", "AirlineName": "IndiGo", "FlightNumber": "2501", "FareClass": "R", "OperatingCarrier": ""}, "AirlinePNR": "", "AccumulatedDuration": 245, "Origin": {"AirportCode": "DEL", "AirportName": "Delhi Indira Gandhi Intl", "Terminal": "Terminal 2", "CityCode": "DEL", "CityName": "Delhi", "CountryCode": "IN", "CountryName": "India"}, "Destination": {"AirportCode": "AMD", "AirportName": "Sardar Vallabh Bhai Patel Intl Arpt", "Terminal": "Terminal 1", "CityCode": "AMD", "CityName": "Ahmedabad", "CountryCode": "IN", "CountryName": "India"}, "Duration": 85, "GroundTime": 160, "Mile": "", "StopOver": "", "StopPoint": "", "StopPointArrivalTime": "", "StopPointDepartureTime": "", "Craft": "", "Remark": "", "IsETicketEligible": "", "FlightStatus": "", "Status": ""}, {"Baggage": "15 Kg (01 Piece only)", "CabinBaggage": "7 Kg", "TripIndicator": 1, "SegmentIndicator": 2, "DepTime": "2023-12-31T22:45", "ArrTime": "2024-01-01T00:10", "Airline": {"AirlineCode": "6E", "AirlineName": "IndiGo", "FlightNumber": "6794", "FareClass": "R", "OperatingCarrier": ""}, "AirlinePNR": "", "AccumulatedDuration": 330, "Origin": {"AirportCode": "AMD", "AirportName": "Sardar Vallabh Bhai Patel Intl Arpt", "Terminal": "Terminal 1", "CityCode": "AMD", "CityName": "Ahmedabad", "CountryCode": "IN", "CountryName": "India"}, "Destination": {"AirportCode": "BOM", "AirportName": "Chhatrapati Shivaji", "Terminal": "Terminal 2", "CityCode": "BOM", "CityName": "Mumbai", "CountryCode": "IN", "CountryName": "India"}, "Duration": 85, "GroundTime": "", "Mile": "", "StopOver": "", "StopPoint": "", "StopPointArrivalTime": "", "StopPointDepartureTime": "", "Craft": "", "Remark": "", "IsETicketEligible": "", "FlightStatus": "", "Status": ""}], "FareRules": [{"Origin": "", "Destination": "", "Airline": "", "FareBasisCode": "", "FareRuleDetail": "", "FareRestriction": ""}], "InvoiceNo": "", "InvoiceStatus": "", "InvoiceCreatedOn": "", "Remarks": "", "PartialSegmentCancellation": "Not Allowed"}}}
+                                {"Baggage": "15 Kg (01 Piece only)", "CabinBaggage": "7 Kg", "TripIndicator": 1, "SegmentIndicator": 1, "DepTime": "2023-12-31T18:40", "ArrTime": "2023-12-31T20:05", "Airline": {"AirlineCode": "6E", "AirlineName": "IndiGo", "FlightNumber": "2501", "FareClass": "R", "OperatingCarrier": ""}, "AirlinePNR": "", "AccumulatedDuration": 245, "Origin": {"AirportCode": "DEL", "AirportName": "Delhi Indira Gandhi Intl", "Terminal": "Terminal 2", "CityCode": "DEL", "CityName": "Delhi", "CountryCode": "IN", "CountryName": "India"}, "Destination": {"AirportCode": "AMD", "AirportName": "Sardar Vallabh Bhai Patel Intl Arpt", "Terminal": "Terminal 1", "CityCode": "AMD", "CityName": "Ahmedabad", "CountryCode": "IN", "CountryName": "India"}, "Duration": 85, "GroundTime": 160, "Mile": "", "StopOver": "", "StopPoint": "", "StopPointArrivalTime": "", "StopPointDepartureTime": "", "Craft": "", "Remark": "", "IsETicketEligible": "", "FlightStatus": "", "Status": ""}, {"Baggage": "15 Kg (01 Piece only)", "CabinBaggage": "7 Kg", "TripIndicator": 1, "SegmentIndicator": 2, "DepTime": "2023-12-31T22:45", "ArrTime": "2024-01-01T00:10", "Airline": {"AirlineCode": "6E", "AirlineName": "IndiGo", "FlightNumber": "6794", "FareClass": "R", "OperatingCarrier": ""}, "AirlinePNR": "", "AccumulatedDuration": 330, "Origin": {"AirportCode": "AMD", "AirportName": "Sardar Vallabh Bhai Patel Intl Arpt", "Terminal": "Terminal 1", "CityCode": "AMD", "CityName": "Ahmedabad", "CountryCode": "IN", "CountryName": "India"}, "Destination": {"AirportCode": "BOM", "AirportName": "Chhatrapati Shivaji", "Terminal": "Terminal 2", "CityCode": "BOM", "CityName": "Mumbai", "CountryCode": "IN", "CountryName": "India"}, "Duration": 85, "GroundTime": "", "Mile": "", "StopOver": "", "StopPoint": "", "StopPointArrivalTime": "", "StopPointDepartureTime": "", "Craft": "", "Remark": "", "IsETicketEligible": "", "FlightStatus": "", "Status": ""}], "FareRules": [{"Origin": "", "Destination": "", "Airline": "", "FareBasisCode": "", "FareRuleDetail": "", "FareRestriction": ""}], "InvoiceNo": "", "InvoiceStatus": "", "InvoiceCreatedOn": "", "Remarks": "", "PartialSegmentCancellation": "Not Allowed"}}}
             elif payment_object["type"] == "hotel":
                 # block = Hotels.BlockRoom(data)
                 # book = Hotels.BookRoom(data)
@@ -656,11 +656,16 @@ def get_order_info():
 def get_pdf():
     data = request.get_json()
     orderId = data['orderId']
-    from report import flight_invoiceMD, get_pdf
+    from report import flight_invoiceMD, get_pdf, bus_markdown, hotel_markdown
 
     payment_object = FIREBASE.read_from_firestore(
         custom_id=orderId, collection="payments")
-    markdown = flight_invoiceMD(payment_object["Booking"])
+    if payment_object['type'] == "flight":
+        markdown = flight_invoiceMD(payment_object["Booking"])
+    if payment_object['type'] == "hotel":
+        markdown = hotel_markdown(payment_object)
+    if payment_object['type'] == "bus":
+        markdown = bus_markdown(payment_object)
     pdf_content = get_pdf(markdown)
     if pdf_content is not None:
         return send_file(

@@ -292,6 +292,53 @@ def flight_invoiceMD(data):
     return markdown_template
 
 
+def bus_markdown(json_data):
+    invoice = ""
+    invoice = f"Booking ID: {json_data['metadata']['orderId']}\n"
+    invoice += f"Customer Name: {json_data['metadata']['name']}\n"
+    invoice += f"Contact: {json_data['metadata']['contact']}\n"
+    invoice += f"Email: {json_data['metadata']['email']}\n"
+    invoice += f"Total Amount: {json_data['metadata']['amount']} {json_data['metadata']['currency']}\n"
+    invoice += "Bus Details:\n"
+    invoice += f"- Travel Name: {json_data['Booking']['block']['Result']['TravelName']}\n"
+    invoice += f"- Bus Type: {json_data['Booking']['block']['Result']['BusType']}\n"
+    invoice += "Passengers:\n"
+    for passenger in json_data['Booking']['block']['Result']['Passenger']:
+        invoice += f"- {passenger['FirstName']} ({passenger['Title']}) - Age: {passenger['Age']}, Gender: {passenger['Gender']}, Seat: {passenger['Seat']['SeatName']}\n"
+
+    return invoice
+
+
+def hotel_markdown(json_data):
+    invoice = ""
+    invoice += "# Booking Details:\n"
+    invoice = f" ## Booking ID: {json_data['Booking']['book']['BookResult']['BookingId']}\n"
+    invoice = f" ## Invoice Number: {json_data['Booking']['book']['BookResult']['InvoiceNumber']}\n"
+    invoice = f" ## Booking Reference Number: {json_data['Booking']['book']['BookResult']['BookingRefNo']}\n"
+    invoice = f" ## Hotel Booking Status: {json_data['Booking']['book']['BookResult']['HotelBookingStatus']}\n"
+    invoice += "\n"
+    invoice += f"Customer Name: {json_data['metadata']['name']}\n"
+    invoice += f"Contact: {json_data['metadata']['contact']}\n"
+    invoice += f"Email: {json_data['metadata']['email']}\n"
+    invoice += f"Total Amount: {json_data['metadata']['amount']} {json_data['metadata']['currency']}\n"
+    invoice += "\n"
+    invoice += "\n"
+    invoice += "# Hotel Details:\n"
+    invoice += f"- Hotel Name: {json_data['Booking']['block']['BlockRoomResult']['HotelName']}\n"
+    invoice += f"- Hotel Address line 1: {json_data['Booking']['block']['BlockRoomResult']['AddressLine1']}\n"
+    invoice += f"- Hotel Address line 2: {json_data['Booking']['block']['BlockRoomResult']['AddressLine2']}\n"
+    invoice += "\n"
+    invoice += "Room Details:\n"
+    for passenger in json_data['Booking']['block']['BlockRoomResult']['HotelRoomsDetails']:
+        invoice += f"   - Name - {passenger['RoomTypeName']}, Code - ({passenger['RoomTypeCode']}) - Id: {str(passenger['RoomId'])}\n"
+        try:
+            invoice += f"   - Cancellation Policy:\n    {passenger['CancellationPolicies']['CancellationPolicy']}\n"
+        except:
+            pass
+    print(invoice)
+    return invoice
+
+
 def get_pdf(markdown_content="# Heading 1"):
     import requests
 
