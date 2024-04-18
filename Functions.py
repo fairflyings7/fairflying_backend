@@ -572,17 +572,14 @@ class Bus:
         else:
             return False
 
-        resp = self.BlockBus(payload_data)
-        if resp['Error']['ErrorCode'] != '0':
-            print(resp)
-            return None, 501
+        # resp = self.BlockBus(payload_data)
+        # if resp['Error']['ErrorCode'] != '0':
+        #     print(resp)
+        #     return None, 501
         response = requests.post(api_url, json=payload_data, headers=headers)
 
         if response.status_code == 200:
             response_data = response.json()
-            if response_data['Error']['ErrorCode'] != '0':
-                # print(resp)
-                return ({"Error": response_data['Error']['ErrorCode'], "resp": response_data}), 501
             return response_data
 
         else:
@@ -645,6 +642,7 @@ class flight:
                 "ChildCount": "0",
                 "InfantCount": "0",
                 "JourneyType": "1",
+                "FareType": "1",
                 # 1 - oneway , 2 - return, 3 - multiCity, 4- advance search
                 "Segments": [
                     {
@@ -667,8 +665,6 @@ class flight:
 
             if response.status_code == 200:
                 response_data = response.json()
-                with open('flight_Search.json', 'w') as f:
-                    json.dump(response_data, f)
                 return response_data
 
             else:
@@ -676,7 +672,170 @@ class flight:
 
         except requests.exceptions.RequestException as e:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
+        with open('flight_Search.json', 'w') as f:
+            json.dump(response_data, f)
     # print(json.dumps(Flight_search(), indent=4))
+
+    def calandar_Fare(self, inp=None):
+        api_url = 'https://flight.srdvtest.com/v8/rest/GetCalendarFare'
+        if inp:
+            payload_data = {**head, **inp}
+            print(payload_data)
+        else:
+            data = {
+                "JourneyType": "1",
+                "Sources": None,
+                "FareType": 2,
+                "Segments": [
+                    {
+                        "Origin": "DEL",
+                        "Destination": "BOM",
+                        "FlightCabinClass": "1",
+                        "PreferredDepartureTime": "2024-08-21T00:00:00",
+                        "PreferredArrivalTime": "2024-08-21T00:00:00"
+                    }
+                ]
+            }
+            payload_data = {**head, **data}
+            print(payload_data)
+
+        try:
+            print("headers\n", headers)
+            response = requests.post(
+                api_url, json=payload_data, headers=headers)
+
+            if response.status_code == 200:
+                response_data = response.json()
+                return response_data
+
+            else:
+                return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
+
+        except requests.exceptions.RequestException as e:
+            return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
+    # print(json.dumps(self.calandar_Fare(), indent=4))
+
+    def fare_rule(self, inp=None):
+        api_url = 'https://flight.srdvtest.com/v8/rest/SSR'
+        if inp:
+            payload_data = {**head, **inp}
+            print(payload_data)
+        else:
+            data = {
+                "SrdvType": "XXXX",
+                "SrdvIndex": "XXXX",
+                "TraceId": "XXXX",
+                "ResultIndex": "XXXX"
+            }
+            payload_data = {**head, **data}
+            print(payload_data)
+
+        try:
+            print("headers\n", headers)
+            response = requests.post(
+                api_url, json=payload_data, headers=headers)
+
+            if response.status_code == 200:
+                response_data = response.json()
+                return response_data
+
+            else:
+                return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
+
+        except requests.exceptions.RequestException as e:
+            return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
+    # print(json.dumps(SSR(), indent=4))
+    def fare_quote(self, inp=None):
+        api_url = 'https://flight.srdvtest.com/v8/rest/FareRule'
+        if inp:
+            payload_data = {**head, **inp}
+            print(payload_data)
+        else:
+            data = {
+                "SrdvType": "XXXX",
+                "SrdvIndex": "XXXX",
+                "TraceId": "XXXX",
+                "ResultIndex": "XXXX"
+            }
+            payload_data = {**head, **data}
+            print(payload_data)
+
+        try:
+            print("headers\n", headers)
+            response = requests.post(
+                api_url, json=payload_data, headers=headers)
+
+            if response.status_code == 200:
+                response_data = response.json()
+                return response_data
+
+            else:
+                return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
+
+        except requests.exceptions.RequestException as e:
+            return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
+    # print(json.dumps(SSR(), indent=4))
+    def SSR(self, inp=None):
+        api_url = 'https://flight.srdvtest.com/v8/rest/SSR'
+        if inp:
+            payload_data = {**head, **inp}
+            print(payload_data)
+        else:
+            data = {
+                "SrdvType": "XXXX",
+                "SrdvIndex": "XXXX",
+                "TraceId": "XXXX",
+                "ResultIndex": "XXXX"
+            }
+            payload_data = {**head, **data}
+            print(payload_data)
+
+        try:
+            print("headers\n", headers)
+            response = requests.post(
+                api_url, json=payload_data, headers=headers)
+
+            if response.status_code == 200:
+                response_data = response.json()
+                return response_data
+
+            else:
+                return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
+
+        except requests.exceptions.RequestException as e:
+            return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
+    # print(json.dumps(SSR(), indent=4))
+
+    def SeatMap(self, inp=None):
+        api_url = 'https://flight.srdvtest.com/v8/rest/SeatMap'
+        if inp:
+            payload_data = {**head, **inp}
+            print(payload_data)
+        else:
+            data = {
+                "SrdvType": "XXXX",
+                "SrdvIndex": "XXXX",
+                "TraceId": "XXXX",
+                "ResultIndex": "XXXX"
+            }
+            payload_data = {**head, **data}
+            print(payload_data)
+
+        try:
+            print("headers\n", headers)
+            response = requests.post(
+                api_url, json=payload_data, headers=headers)
+
+            if response.status_code == 200:
+                response_data = response.json()
+                return response_data
+
+            else:
+                return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
+
+        except requests.exceptions.RequestException as e:
+            return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
+    # print(json.dumps(SeatMap(), indent=4))
 
     def LLC_ticket_Req(self, data):
         api_url = 'https://flight.srdvtest.com/v8/rest/TicketLCC'
