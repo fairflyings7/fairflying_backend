@@ -43,24 +43,27 @@ External = get_ip_address()["ip"]
 def BookingFlow(data, Type, email):
     data = {"bookingData": data, "metadata": {
         "BookingType": Type, "email": email}}
-
     pass
+
+
+# HOTEL_URL = "https://hotel.srdvtest.com/v5/rest"
+# BUS_URL = "https://bus.srdvtest.com/v5/rest"
+# # FLIGHT_URL = "https://flight.srdvtest.com/v5/rest"
+# FLIGHT_URL = "https://flight.srdvtest.com/v8/rest"
+HOTEL_URL = "https://hotel.srdvapi.com/v5/rest"
+BUS_URL = "https://bus.srdvapi.com/v5/rest"
+# FLIGHT_URL = "https://flight.srdvtest.com/v5/rest"
+FLIGHT_URL = "https://flight.srdvapi.com/v8/rest"
 
 
 class Hotels:
     def balance_check(self):
-        api_url = 'https://hotel.srdvtest.com/v5/rest/Balance'
-        payload_data = {
-            "EndUserIp": External_ip,
-            "ClientId": str(ClientId),
-            "UserName": UserName,
-            "Password": Password,
-        }
+        api_url = HOTEL_URL+'/Balance'
 
         try:
-            print(payload_data)
+            print(head)
             response = requests.post(
-                api_url, json=payload_data, headers=headers)
+                api_url, json=head, headers=headers)
 
             if response.status_code == 200:
                 response_data = response.json()
@@ -76,10 +79,10 @@ class Hotels:
     # print(balance_check())
 
     def Hotel_search(self, inp=None):
-        api_url = 'https://hotel.srdvtest.com/v5/rest/Search'
+        api_url = HOTEL_URL+'/Search'
         if inp:
             payload_data = {**head, **inp}
-            # print(payload_data)
+            print(payload_data)
         else:
             data = {
                 "BookingMode": "5",
@@ -122,7 +125,7 @@ class Hotels:
     # print(json.dumps(Hotel_search(), indent=4))
 
     def HotelInfo(self, data):
-        url = "https://hotel.srdvtest.com/v5/rest/GetHotelInfo"
+        url = HOTEL_URL+"/GetHotelInfo"
         sampleData = {
             "TraceId": "1",
             "SrdvType": "SingleTB",
@@ -151,7 +154,7 @@ class Hotels:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
 
     def RoomInfo(self, data):
-        url = "https://hotel.srdvtest.com/v5/rest/GetHotelRoom"
+        url = HOTEL_URL+"/GetHotelRoom"
         sampleData = {
             "TraceId": "1",
             "SrdvType": "SingleTB",
@@ -176,8 +179,8 @@ class Hotels:
         except requests.exceptions.RequestException as e:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
 
-    def BlockRoom(self, data):
-        url = "https://hotel.srdvtest.com/v5/rest/BlockRoom"
+    def BlockRoom(data):
+        url = HOTEL_URL+"/BlockRoom"
         sampleData = {
             "TraceId": "1",
             "SrdvType": "SingleTB",
@@ -302,8 +305,8 @@ class Hotels:
         except requests.exceptions.RequestException as e:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
 
-    def BookRoom(self, data):
-        url = "https://hotel.srdvtest.com/v5/rest/Book"
+    def BookRoom(data):
+        url = HOTEL_URL+"/Book"
         sampleData = {
             "TraceId": "1",
             "SrdvType": "SingleTB",
@@ -431,7 +434,7 @@ class Hotels:
 
 class Bus:
     def bus_balance_check(self):
-        api_url = 'https://bus.srdvtest.com/v5/rest/Balance'
+        api_url = BUS_URL+'/Balance'
         payload_data = head
 
         try:
@@ -453,7 +456,7 @@ class Bus:
     # print(balance_check())
 
     def bus_city_list(self,):
-        api_url = 'https://bus.srdvtest.com/v5/rest/GetBusCityList'
+        api_url = BUS_URL+'/GetBusCityList'
         payload_data = head
         try:
             # print(payload_data)
@@ -475,7 +478,7 @@ class Bus:
     # print(json.dumps(bus_city_list(), indent=4))
 
     def bus_search(self, inp=None):
-        api_url = 'https://bus.srdvtest.com/v5/rest/Search'
+        api_url = BUS_URL+'/Search'
         if inp:
             payload_data = {**head, **inp}
             print("payload", payload_data)
@@ -507,7 +510,7 @@ class Bus:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
 
     def bus_seat_layout(self, inp=None):
-        url = 'https://bus.srdvtest.com/v5/rest/GetSeatLayOut'
+        url = BUS_URL+'/GetSeatLayOut'
 
         if inp:
             payload_data = {**head, **inp}
@@ -536,7 +539,7 @@ class Bus:
 
     # print(json.dumps(bus_search(), indent=4))
     def bus_boarding_point_details(self, inp=None):
-        url = 'https://bus.srdvtest.com/v5/rest/GetBoardingPointDetails'
+        url = BUS_URL+'/GetBoardingPointDetails'
 
         if inp:
             payload_data = {**head, **inp}
@@ -564,7 +567,7 @@ class Bus:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
 
     def Bus_Booking_Req(self, data):
-        api_url = 'https://bus.srdvtest.com/v5/rest/Book'
+        api_url = BUS_URL+'/Book'
 
         if data:
             payload_data = {**head, **data}
@@ -587,7 +590,7 @@ class Bus:
             return (f"Error: {response.status_code} - {response.text}")
 
     def BlockBus(self, data):
-        api_url = 'https://bus.srdvtest.com/v5/rest/Block'
+        api_url = BUS_URL+'/Block'
 
         if data:
             payload_data = {**head, **data}
@@ -610,7 +613,7 @@ class Bus:
 
 class flight:
     def balance_check(self,):
-        api_url = 'https://flight.srdvtest.com/v5/rest/Balance'
+        api_url = FLIGHT_URL+'/Balance'
         payload_data = {**head}
 
         try:
@@ -632,7 +635,7 @@ class flight:
     # print(balance_check())
 
     def Flight_search(self, inp=None):
-        api_url = 'https://flight.srdvtest.com/v8/rest/Search'
+        api_url = FLIGHT_URL+'/Search'
         if inp:
             payload_data = {**head, **inp}
             print(payload_data)
@@ -677,7 +680,7 @@ class flight:
     # print(json.dumps(Flight_search(), indent=4))
 
     def calandar_Fare(self, inp=None):
-        api_url = 'https://flight.srdvtest.com/v8/rest/GetCalendarFare'
+        api_url = FLIGHT_URL+'/GetCalendarFare'
         if inp:
             payload_data = {**head, **inp}
             print(payload_data)
@@ -716,7 +719,7 @@ class flight:
     # print(json.dumps(self.calandar_Fare(), indent=4))
 
     def fare_rule(self, inp=None):
-        api_url = 'https://flight.srdvtest.com/v8/rest/SSR'
+        api_url = FLIGHT_URL+'/SSR'
         if inp:
             payload_data = {**head, **inp}
             print(payload_data)
@@ -745,8 +748,9 @@ class flight:
         except requests.exceptions.RequestException as e:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
     # print(json.dumps(SSR(), indent=4))
+
     def fare_quote(self, inp=None):
-        api_url = 'https://flight.srdvtest.com/v8/rest/FareRule'
+        api_url = FLIGHT_URL+'/FareRule'
         if inp:
             payload_data = {**head, **inp}
             print(payload_data)
@@ -775,8 +779,9 @@ class flight:
         except requests.exceptions.RequestException as e:
             return {"Error": e, "headers_passed": headers, "data_passed": payload_data}
     # print(json.dumps(SSR(), indent=4))
+
     def SSR(self, inp=None):
-        api_url = 'https://flight.srdvtest.com/v8/rest/SSR'
+        api_url = FLIGHT_URL+'/SSR'
         if inp:
             payload_data = {**head, **inp}
             print(payload_data)
@@ -807,7 +812,7 @@ class flight:
     # print(json.dumps(SSR(), indent=4))
 
     def SeatMap(self, inp=None):
-        api_url = 'https://flight.srdvtest.com/v8/rest/SeatMap'
+        api_url = FLIGHT_URL+'/SeatMap'
         if inp:
             payload_data = {**head, **inp}
             print(payload_data)
@@ -838,7 +843,7 @@ class flight:
     # print(json.dumps(SeatMap(), indent=4))
 
     def LLC_ticket_Req(self, data):
-        api_url = 'https://flight.srdvtest.com/v8/rest/TicketLCC'
+        api_url = FLIGHT_URL+'/TicketLCC'
 
         if data:
             payload_data = {**head, **data}
@@ -870,7 +875,7 @@ class flight:
             return (f"Error: {response.status_code} - {response.text}")
 
     def Fare_quote(self, data):
-        api_url = 'https://flight.srdvtest.com/v8/rest/FareQuote'
+        api_url = FLIGHT_URL+'/FareQuote'
         if data:
             payload_data = {**head, **data}
         else:
