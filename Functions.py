@@ -1,9 +1,10 @@
 import firebase_admin
-from firebase_admin import credentials, auth, firestore
+from firebase_admin import credentials, auth, firestore, storage
 from firebase_admin.exceptions import FirebaseError
 
 from dotenv import load_dotenv
 import requests
+import io
 import os
 import json
 import random
@@ -48,12 +49,10 @@ def BookingFlow(data, Type, email):
 
 # HOTEL_URL = "https://hotel.srdvtest.com/v5/rest"
 # BUS_URL = "https://bus.srdvtest.com/v5/rest"
-# # FLIGHT_URL = "https://flight.srdvtest.com/v5/rest"
 # FLIGHT_URL = "https://flight.srdvtest.com/v8/rest"
-HOTEL_URL = "https://hotel.srdvapi.com/v5/rest"
-BUS_URL = "https://bus.srdvapi.com/v5/rest"
-# FLIGHT_URL = "https://flight.srdvtest.com/v5/rest"
-FLIGHT_URL = "https://flight.srdvapi.com/v8/rest"
+HOTEL_URL = os.getenv("HOTEL_URL")
+BUS_URL = os.getenv("BUS_URL")
+FLIGHT_URL = os.getenv("FLIGHT_URL")
 
 
 class Hotels:
@@ -906,8 +905,11 @@ class firebase:
             self.cred = credentials.Certificate(
                 'backend/Flight_API/fairflying_auth_firebase.json')
 
-        firebase_admin.initialize_app(self.cred)
+        firebase_admin.initialize_app(self.cred, {
+            'storageBucket': 'billing-baba.appspot.com'
+        })
         self.db = firestore.client()
+        self.bucket = storage.bucket()
 
     def check_user_exists(self, uid):
         try:
@@ -993,3 +995,38 @@ class firebase:
             new_id = ''.join(random.choices(
                 string.ascii_letters + string.digits, k=length))
         return new_id
+
+    def upload_file(self, file_content, filename, file_type):
+        # Determine content type and file extension
+        if file_type == 'image':
+            content_type = 'image/png'
+            extension = '.png'
+        elif file_type == 'pdf':
+            content_type = 'application/pdf'
+            extension = '.pdf'
+        else:
+            raise ValueError(
+                "Unsupported file type. Only 'image' and 'pdf' are supported.")
+
+        # Generate full filename
+        full_filename = f"file_{filename}{extension}"
+        print(full_filename)
+
+        # Create a blob and upload the file
+        blob = self.bucket.blob(full_filename)
+
+        # If file_content is a BytesIO object, read it as bytes
+        if isinstance(file_content, io.BytesIO):
+            file_content = file_content.read()
+
+        blob.upload_from_string(file_content, content_type=content_type)
+        blob.make_public()
+
+        # Return the public URL of the uploaded file
+        file_url = blob.public_url
+        return file_url
+
+    def delete_img(self, url):
+        image1_blob = storage.bucket().blob(url)
+        image1_blob.delete()
+        return True
