@@ -718,7 +718,7 @@ class flight:
     # print(json.dumps(self.calandar_Fare(), indent=4))
 
     def fare_rule(self, inp=None):
-        api_url = FLIGHT_URL+'/SSR'
+        api_url = FLIGHT_URL+'/FareRule'
         if inp:
             payload_data = {**head, **inp}
             print(payload_data)
