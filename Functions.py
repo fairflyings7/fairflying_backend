@@ -749,7 +749,7 @@ class flight:
     # print(json.dumps(SSR(), indent=4))
 
     def fare_quote(self, inp=None):
-        api_url = FLIGHT_URL+'/FareRule'
+        api_url = FLIGHT_URL+'/FareQuote'
         if inp:
             payload_data = {**head, **inp}
             print(payload_data)
