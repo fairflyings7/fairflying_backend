@@ -52,6 +52,7 @@ def send_email(email, subject, body):
 def health():
     return "hi", 200
 
+
 @app.route('/editData', methods=['POST'])
 def editData():
     auth_header = request.headers.get('Authorization')
@@ -74,16 +75,15 @@ def editData():
         return jsonify({"status": res}), 200
     else:
         return jsonify({"status": res}), 501
-    
+
+
 @app.route('/get_user', methods=['GET'])
 def get_items():
     auth_header = request.headers.get('Authorization')
-    print("Authorization Header:", auth_header)
     if not FIREBASE.check_user_exists(auth_header):
         return jsonify({"status": "fail", "Description": "user doesnt exist"}), 200
-
     res = FIREBASE.read_from_firestore(custom_id=auth_header)
-    return jsonify({"status": "success", "data": res}), 200
+    return jsonify(res), 200
 
 
 @app.route('/check_flight_balace', methods=['GET'])
@@ -109,17 +109,12 @@ def flight_fair_Cal():
 @app.route('/get-flight-details', methods=['POST'])
 def flight_ssr():
     req = request.get_json()
-    Rule = FLIGHT.fare_rule(req['data'])
     quote = FLIGHT.fare_quote(req['data'])
+    Rule = FLIGHT.fare_rule(req['data'])
     ssr = FLIGHT.SSR(req['data'])
     seatMapDev = FLIGHT.SeatMap(req['data'])
-    seatMap = flight_seat_layout()
 
-    return jsonify({"rules":Rule,"quote":quote,"ssr":ssr,"seatMap":seatMap,"seatMapDev":seatMapDev}), 200
-
-
-def flight_seat_layout():
-    return False
+    return jsonify({"rules": Rule, "quote": quote, "ssr": ssr, "seatMap": seatMapDev}), 200
 
 
 @app.route('/book_flight', methods=['POST'])
@@ -164,8 +159,8 @@ def hotelbooking():
 def search_buses():
     req = request.get_json()
     res = BUS.bus_search(req['data'])
-    print("Req",req,"\n")
-    print("Res",res,"\n")
+    print("Req", req, "\n")
+    print("Res", res, "\n")
     return jsonify(res), 200
 
 
@@ -264,6 +259,10 @@ def PaymentView():
         "metadata": newMetaData
     }
     import json
+    print("req")
+    print(json.dumps(body, indent=4))
+    print("res")
+
     # print(json.dumps(body, indent=4))
     FIREBASE.write_to_firestore(
         id=razorpay_order["id"], data={"data": json.dumps(body)}, collection="payments")
@@ -291,11 +290,11 @@ def CallbackView():
             payment_object = json.loads(FIREBASE.read_from_firestore(
                 custom_id=response['razorpay_order_id'], collection="payments")['data'])
             data = payment_object['data']
+            uid = payment_object['uid']
             # print(json.dumps(data, indent=4))
             if payment_object["type"] == "flight":
-                print(data)
                 res = FLIGHT.LLC_ticket_Req(data)
-                
+
             elif payment_object["type"] == "hotel":
                 block = Hotels.BlockRoom(data)
                 book = Hotels.BookRoom(data)
@@ -323,9 +322,24 @@ def CallbackView():
             }
 
             FIREBASE.write_to_firestore(
-                id=response["razorpay_order_id"], data={"data": json.dumps(payment_object)}, collection="payments")
+                id=response["razorpay_order_id"], data={"data": jsonify(payment_object)}, collection="payments")
 
-            mail_body = 'Your order by Fairflyings has been placed successfully. please use the order ID ' + \
+            try:
+                data2 = FIREBASE.read_from_firestore(
+                    custom_id=uid, collection="user_data")
+                try:
+                    data2["payments"].append(payment_object)
+                except Exception as e:
+                    print(e)
+                    data2["payments"] = [payment_object]
+                FIREBASE.write_to_firestore(
+                    id=uid, data={"data": json.dumps(data2)}, collection="user_data")
+            except Exception as e:
+                print(e)
+                FIREBASE.write_to_firestore(
+                    id=uid, data={"data": json.dumps(payment_object)}, collection="user_data")
+
+            mail_body = 'Your order by Fairflyings has been placed successfully. please use the visit '+os.getenv("WEB_URL")+'/BookingSuccessfull?data=&orderId=order_O6qHcIfjlOsfF7' + \
                 response['razorpay_order_id'] + \
                 " to further refer to this payment"
             send_email(email=payment_object["metadata"]["email"],
@@ -366,6 +380,7 @@ def CallbackView():
 def get_order_info():
     res = request.get_json()
     order_id = res['orderId']
+    print(order_id)
     try:
         payment_object = json.loads(FIREBASE.read_from_firestore(
             custom_id=order_id, collection="payments")['data'])
@@ -373,6 +388,8 @@ def get_order_info():
         payment_object = FIREBASE.read_from_firestore(
             custom_id=order_id, collection="payments")
 
+    payment_object = FIREBASE.read_from_firestore(
+        custom_id=order_id, collection="payments")
     return jsonify(payment_object), 200
 
 

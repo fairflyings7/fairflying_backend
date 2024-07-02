@@ -801,7 +801,7 @@ class flight:
 
             if response.status_code == 200:
                 response_data = response.json()
-                return response_data
+                return {"Response": response_data, "headers_passed": headers, "data_passed": payload_data}
 
             else:
                 return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
@@ -856,9 +856,10 @@ class flight:
             "ResultIndex": data["ResultIndex"]
         }
         resp = self.Fare_quote(fare_quote_data)
+        print("fare quote")
+        print(json.dumps(resp, indent=4))
         if resp['Error']['ErrorCode'] != '0':
-            print(resp)
-            return None, 501
+            return {"Error":"Error in fareQuote","code": 501, "error statement": resp}
         for i in range(len(data['Passengers'])):
             payload_data["Passengers"][i]['Fare'] = resp['Results']['Fare']
 
@@ -866,6 +867,9 @@ class flight:
 
         if response.status_code == 200:
             response_data = response.json()
+            print("fare quote")
+            print(json.dumps({"Response": response_data,
+                  "req": payload_data, "headers": headers}, indent=4))
             return {"Response": response_data, "req": payload_data, "headers": headers}
             return response_data
 
