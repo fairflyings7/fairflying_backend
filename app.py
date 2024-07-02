@@ -110,8 +110,15 @@ def flight_fair_Cal():
 def flight_ssr():
     req = request.get_json()
     quote = FLIGHT.fare_quote(req['data'])
+    print(quote)
+    print("starting rules")
     Rule = FLIGHT.fare_rule(req['data'])
+    print(Rule)
+    print("starting rules")
     ssr = FLIGHT.SSR(req['data'])
+    print(ssr)
+    print("starting ssr")
+
     seatMapDev = FLIGHT.SeatMap(req['data'])
 
     return jsonify({"rules": Rule, "quote": quote, "ssr": ssr, "seatMap": seatMapDev}), 200
