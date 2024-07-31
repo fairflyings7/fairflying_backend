@@ -81,7 +81,7 @@ class Hotels:
         api_url = HOTEL_URL+'/Search'
         if inp:
             payload_data = {**head, **inp}
-            print(payload_data)
+            # print(payload_data)
         else:
             data = {
                 "BookingMode": "5",
@@ -163,7 +163,7 @@ class Hotels:
         }
         if data:
             payload_data = {**head, **data}
-            print(payload_data)
+            # print(payload_data)
         else:
             payload_data = {**head, **sampleData}
 
@@ -414,7 +414,7 @@ class Hotels:
             payload_data = {**head, **data}
         else:
             payload_data = {**head, **sampleData}
-        print(json.dumps(payload_data, indent=4))
+        # print(json.dumps(payload_data, indent=4))
         try:
             # print("headers\n", headers)
             response = requests.post(
@@ -437,7 +437,7 @@ class Bus:
         payload_data = head
 
         try:
-            print(payload_data)
+            # print(payload_data)
             response = requests.post(
                 api_url, json=json.dumps(payload_data), headers=headers)
 
@@ -480,7 +480,7 @@ class Bus:
         api_url = BUS_URL+'/Search'
         if inp:
             payload_data = {**head, **inp}
-            print("payload", payload_data)
+            # print("payload", payload_data)
         else:
             data = {
                 "source_city": "Mumbai",
@@ -513,7 +513,7 @@ class Bus:
 
         if inp:
             payload_data = {**head, **inp}
-            print("payload", payload_data)
+            # print("payload", payload_data)
 
         else:
             data = {
@@ -523,7 +523,7 @@ class Bus:
             payload_data = {**head, **data}
 
         try:
-            print("headers - ", headers)
+            # print("headers - ", headers)
             response = requests.post(url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
@@ -542,7 +542,7 @@ class Bus:
 
         if inp:
             payload_data = {**head, **inp}
-            print("payload", payload_data)
+            # print("payload", payload_data)
 
         else:
             data = {
@@ -552,7 +552,7 @@ class Bus:
             payload_data = {**head, **data}
 
         try:
-            print("headers - ", headers)
+            # print("headers - ", headers)
             response = requests.post(url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
@@ -570,7 +570,7 @@ class Bus:
 
         if data:
             payload_data = {**head, **data}
-            print("payload", payload_data)
+            # print("payload", payload_data)
         else:
             return False
 
@@ -616,7 +616,7 @@ class flight:
         payload_data = {**head}
 
         try:
-            print(payload_data)
+            # print(payload_data)
             response = requests.post(
                 api_url, json=json.dumps(payload_data), headers=headers)
 
@@ -637,7 +637,8 @@ class flight:
         api_url = FLIGHT_URL+'/Search'
         if inp:
             payload_data = {**head, **inp}
-            print(payload_data)
+            # print(payload_data)
+            print("Search")
         else:
             data = {
                 "AdultCount": "1",
@@ -658,15 +659,18 @@ class flight:
                 ]
             }
             payload_data = {**head, **data}
-            print(payload_data)
+            # print(payload_data)
 
         try:
-            print("headers\n", headers)
+            # print("headers\n", headers)
             response = requests.post(
                 api_url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
                 response_data = response.json()
+                print(json.dumps(response_data, indent=4))
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "flight_Search.txt")
                 return response_data
 
             else:
@@ -682,7 +686,7 @@ class flight:
         api_url = FLIGHT_URL+'/GetCalendarFare'
         if inp:
             payload_data = {**head, **inp}
-            print(payload_data)
+            # print(payload_data)
         else:
             data = {
                 "JourneyType": "1",
@@ -699,15 +703,17 @@ class flight:
                 ]
             }
             payload_data = {**head, **data}
-            print(payload_data)
+            # print(payload_data)
 
         try:
-            print("headers\n", headers)
+            # print("headers\n", headers)
             response = requests.post(
                 api_url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "Calander_Fare.txt")
                 return response_data
 
             else:
@@ -721,7 +727,8 @@ class flight:
         api_url = FLIGHT_URL+'/FareRule'
         if inp:
             payload_data = {**head, **inp}
-            print(payload_data)
+            # print(payload_data)
+            print("FareRule")
         else:
             data = {
                 "SrdvType": "XXXX",
@@ -730,15 +737,17 @@ class flight:
                 "ResultIndex": "XXXX"
             }
             payload_data = {**head, **data}
-            print(payload_data)
+            # print(payload_data)
 
         try:
-            print("headers\n", headers)
+            # print("headers\n", headers)
             response = requests.post(
                 api_url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "Fare_Rule.txt")
                 return response_data
 
             else:
@@ -752,7 +761,8 @@ class flight:
         api_url = FLIGHT_URL+'/FareQuote'
         if inp:
             payload_data = {**head, **inp}
-            print(payload_data)
+            # print(payload_data)
+            print("FareQuote")
         else:
             data = {
                 "SrdvType": "XXXX",
@@ -761,15 +771,17 @@ class flight:
                 "ResultIndex": "XXXX"
             }
             payload_data = {**head, **data}
-            print(payload_data)
+            # print(payload_data)
 
         try:
-            print("headers\n", headers)
+            # print("headers\n", headers)
             response = requests.post(
                 api_url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "Fare_Quote.txt")
                 return response_data
 
             else:
@@ -783,7 +795,8 @@ class flight:
         api_url = FLIGHT_URL+'/SSR'
         if inp:
             payload_data = {**head, **inp}
-            print(payload_data)
+            # print(payload_data)
+            print("SSR")
         else:
             data = {
                 "SrdvType": "XXXX",
@@ -792,15 +805,17 @@ class flight:
                 "ResultIndex": "XXXX"
             }
             payload_data = {**head, **data}
-            print(payload_data)
+            # print(payload_data)
 
         try:
-            print("headers\n", headers)
+            # print("headers\n", headers)
             response = requests.post(
                 api_url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "SSR.txt")
                 return response_data
                 return {"Response": response_data, "headers_passed": headers, "data_passed": payload_data}
 
@@ -815,7 +830,8 @@ class flight:
         api_url = FLIGHT_URL+'/SeatMap'
         if inp:
             payload_data = {**head, **inp}
-            print(payload_data)
+            # print(payload_data)
+            print('SEAT MAP')
         else:
             data = {
                 "SrdvType": "XXXX",
@@ -824,15 +840,17 @@ class flight:
                 "ResultIndex": "XXXX"
             }
             payload_data = {**head, **data}
-            print(payload_data)
+            # print(payload_data)
 
         try:
-            print("headers\n", headers)
+            # print("headers\n", headers)
             response = requests.post(
                 api_url, json=payload_data, headers=headers)
 
             if response.status_code == 200:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "SeatMap.txt")
                 return response_data
 
             else:
@@ -856,21 +874,13 @@ class flight:
             "TraceId": data["TraceId"],
             "ResultIndex": data["ResultIndex"]
         }
-        resp = self.Fare_quote(fare_quote_data)
-        print("fare quote")
-        print(json.dumps(resp, indent=4))
-        if resp['Error']['ErrorCode'] != '0':
-            return {"Error": "Error in fareQuote", "code": 501, "error statement": resp}
-        for i in range(len(data['Passengers'])):
-            payload_data["Passengers"][i]['Fare'] = resp['Results']['Fare']
 
         response = requests.post(api_url, json=payload_data, headers=headers)
 
         if response.status_code == 200:
             response_data = response.json()
-            print("fare quote")
-            print(json.dumps({"Response": response_data,
-                  "req": payload_data, "headers": headers}, indent=4))
+            writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                        "\n \nResponse\n" + json.dumps(response_data, indent=4), "LCC_Req.txt")
             return {"Response": response_data, "req": payload_data, "headers": headers}
             return response_data
 
@@ -919,7 +929,7 @@ class firebase:
     def check_user_exists(self, uid):
         try:
             user = auth.get_user(uid)
-            print(user)
+            # print(user)
             return True
         except FirebaseError as e:
             if e.code == 'user-not-found':
@@ -931,12 +941,12 @@ class firebase:
                 return False
 
     def change_email_auth_password(self, uid, new_password):
+        print("Password changed Hit.")
         try:
             auth.update_user(
                 uid,
                 password=new_password
             )
-            print("Password changed successfully.")
             return True
         except auth.AuthError as e:
             print("Error occurred:", e)
@@ -958,7 +968,7 @@ class firebase:
         try:
             user_ref = self.db.collection('users').document(uid)
             user_ref.set(user_data)
-            print("User data stored successfully.")
+            # print("User data stored successfully.")
             return True
         except FirebaseError as e:
             print("Error occurred:", e)
@@ -980,7 +990,7 @@ class firebase:
     def write_to_firestore(self, id, data, collection="user_data"):
         doc_ref = self.db.collection(collection).document(id)
         doc_ref.set(data)
-        print("Document '{}' written to Firestore.".format(id))
+        # print("Document '{}' written to Firestore.".format(id))
         return True
 
     def read_from_firestore(self, custom_id, collection="user_data"):
@@ -1015,7 +1025,7 @@ class firebase:
 
         # Generate full filename
         full_filename = f"file_{filename}{extension}"
-        print(full_filename)
+        # print(full_filename)
 
         # Create a blob and upload the file
         blob = self.bucket.blob(full_filename)
@@ -1035,3 +1045,8 @@ class firebase:
         image1_blob = storage.bucket().blob(url)
         image1_blob.delete()
         return True
+
+
+def writeToFile(string, path="random.txt"):
+    with open(path, "w") as file:
+        file.write(string)

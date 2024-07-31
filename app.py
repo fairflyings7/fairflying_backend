@@ -70,7 +70,7 @@ def editData():
     #     except:
     #         print("data got reset")
     #         return jsonify({"status": False, "desc": "data got reset"}), 400
-    res = FIREBASE.write_to_firestore(auth_header, data)
+    res = FIREBASE.write_to_firestore(auth_header, json.dumps(data))
     if res:
         return jsonify({"status": res}), 200
     else:
@@ -159,8 +159,8 @@ def hotelbooking():
 def search_buses():
     req = request.get_json()
     res = BUS.bus_search(req['data'])
-    print("Req", req, "\n")
-    print("Res", res, "\n")
+    # print("Req", req, "\n")
+    # print("Res", res, "\n")
     return jsonify(res), 200
 
 
@@ -259,13 +259,13 @@ def PaymentView():
         "metadata": newMetaData
     }
     import json
-    print("req")
-    print(json.dumps(body, indent=4))
-    print("res")
+    # print("req")
+    # print(json.dumps(body, indent=4))
+    # print("res")
 
     # print(json.dumps(body, indent=4))
     FIREBASE.write_to_firestore(
-        id=razorpay_order["id"], data={"data": json.dumps(body)}, collection="payments")
+        id=razorpay_order["id"], data={"order_prep_data": body}, collection="payments")
 
     mail_body = 'An order is created at Fairflyings with this email address, incase of any doubt please refer to order ID ' + \
         razorpay_order["id"] + " to further refer to this payment"
@@ -294,11 +294,7 @@ def CallbackView():
             # print(json.dumps(data, indent=4))
             if payment_object["type"] == "flight":
                 res = FLIGHT.LLC_ticket_Req(data)
-            if payment_object["type"] == "flight_return":
-                res1 = FLIGHT.LLC_ticket_Req(data[0])
-                res2 = FLIGHT.LLC_ticket_Req(data[1])
-                res = [res1, res2]
-
+            # if payment_object["type"] == "flight_return":
             elif payment_object["type"] == "hotel":
                 block = Hotels.BlockRoom(data)
                 book = Hotels.BookRoom(data)
@@ -306,78 +302,45 @@ def CallbackView():
             elif payment_object["type"] == "bus":
                 block = BUS.BlockBus(data)
                 book = BUS.Bus_Booking_Req(data)
-
                 res = {
                     "block": block,
                     "book": book
                 }
+            elif payment_object["type"] == "flight_return":
+                res1 = FLIGHT.LLC_ticket_Req(data[0])
+                res2 = FLIGHT.LLC_ticket_Req(data[1])
+                res = {"flight_1": res1, "flight_2": res2}
             else:
                 res = {"status": "None", "Desc": "type not selected"}
-            if payment_object["type"] == "flight_return":
-                payment_object = {
-                    **payment_object,
-                    "metadata": {
-                        **payment_object["metadata"],
-                        "status": "Success",
-                        "payment_id": response['razorpay_payment_id'],
-                        "signature_id": response['razorpay_signature'],
-                    },
-                    "Booking": res[0]
-                }
-                payment_object2 = {
-                    **payment_object,
-                    "metadata": {
-                        **payment_object["metadata"],
-                        "status": "Success",
-                        "payment_id": response['razorpay_payment_id'],
-                        "signature_id": response['razorpay_signature'],
-                    },
-                    "Booking": res[1]
-                }
-                print(json.dumps([payment_object, payment_object2], indent=4))
-                FIREBASE.write_to_firestore(
-                    id=response["razorpay_order_id"], data={"data": json.dumps([payment_object, payment_object2])}, collection="payments")
 
+            payment_object = {
+                **payment_object,
+                "metadata": {
+                    **payment_object["metadata"],
+                    "status": "Success",
+                    "payment_id": response['razorpay_payment_id'],
+                    "signature_id": response['razorpay_signature'],
+                },
+                "Booking": res
+            }
+
+            FIREBASE.write_to_firestore(
+                id=response["razorpay_order_id"], data={"data": json.dumps(payment_object)}, collection="payments")
+
+            try:
                 data2 = FIREBASE.read_from_firestore(
                     custom_id=uid, collection="user_data")
                 try:
                     data2["payments"].append(payment_object)
-                    data2["payments"].append(payment_object2)
                 except Exception as e:
                     print(e)
-                    data2["payments"] = [payment_object, payment_object2]
+                    data2["payments"] = [payment_object]
                 FIREBASE.write_to_firestore(
                     id=uid, data={"data": json.dumps(data2)}, collection="user_data")
-            else:
-
-                payment_object = {
-                    **payment_object,
-                    "metadata": {
-                        **payment_object["metadata"],
-                        "status": "Success",
-                        "payment_id": response['razorpay_payment_id'],
-                        "signature_id": response['razorpay_signature'],
-                    },
-                    "Booking": res
-                }
-
+            except Exception as e:
+                print(e)
                 FIREBASE.write_to_firestore(
-                    id=response["razorpay_order_id"], data={"data": jsonify(payment_object)}, collection="payments")
-
-                try:
-                    data2 = FIREBASE.read_from_firestore(
-                        custom_id=uid, collection="user_data")
-                    try:
-                        data2["payments"].append(payment_object)
-                    except Exception as e:
-                        print(e)
-                        data2["payments"] = [payment_object]
-                    FIREBASE.write_to_firestore(
-                        id=uid, data={"data": json.dumps(data2)}, collection="user_data")
-                except Exception as e:
-                    print(e)
-                    FIREBASE.write_to_firestore(
-                        id=uid, data={"data": json.dumps(payment_object)}, collection="user_data")
+                    id=uid, data={"data": json.dumps(payment_object)}, collection="user_data")
 
             mail_body = 'Your order by Fairflyings has been placed successfully. please use the visit '+os.getenv("WEB_URL")+'/BookingSuccessfull?data=&orderId=order_O6qHcIfjlOsfF7' + \
                 response['razorpay_order_id'] + \
@@ -392,7 +355,7 @@ def CallbackView():
 
     else:
         error_metadata = json.loads(response.get('error[metadata]', '{}'))
-        print(json.dumps(error_metadata, indent=4))
+        # print(json.dumps(error_metadata, indent=4))
         payment_object = json.loads(FIREBASE.read_from_firestore(
             custom_id=response['order_id'], collection="payments")['data'])
         payment_object = {
@@ -420,7 +383,7 @@ def CallbackView():
 def get_order_info():
     res = request.get_json()
     order_id = res['orderId']
-    print(order_id)
+    # print(order_id)
     try:
         payment_object = json.loads(FIREBASE.read_from_firestore(
             custom_id=order_id, collection="payments")['data'])
