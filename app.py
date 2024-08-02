@@ -290,8 +290,8 @@ def CallbackView():
         if data:
             print(data)
             try:
-                payment_object = json.loads(FIREBASE.read_from_firestore(
-                    custom_id=response['razorpay_order_id'], collection="payments")['data'])
+                payment_object = FIREBASE.read_from_firestore(
+                    custom_id=response['razorpay_order_id'], collection="payments")
             except:
                 payment_object = json.loads(FIREBASE.read_from_firestore(
                     custom_id=response['razorpay_order_id'], collection="payments"))
