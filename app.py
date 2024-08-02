@@ -265,7 +265,7 @@ def PaymentView():
 
     # print(json.dumps(body, indent=4))
     FIREBASE.write_to_firestore(
-        id=razorpay_order["id"], data={"order_prep_data": body}, collection="payments")
+        id=razorpay_order["id"], data={"order_prep_data": json.dumps(body)}, collection="payments")
 
     mail_body = 'An order is created at Fairflyings with this email address, incase of any doubt please refer to order ID ' + \
         razorpay_order["id"] + " to further refer to this payment"
@@ -285,10 +285,16 @@ def CallbackView():
         # Verifying Payment Signature
         data = razorpay_client.utility.verify_payment_signature(response)
 
+        print("Callback hit")
         # if we get here True signature
         if data:
-            payment_object = json.loads(FIREBASE.read_from_firestore(
-                custom_id=response['razorpay_order_id'], collection="payments")['data'])
+            print(data)
+            try:
+                payment_object = json.loads(FIREBASE.read_from_firestore(
+                    custom_id=response['razorpay_order_id'], collection="payments")['data'])
+            except:
+                payment_object = json.loads(FIREBASE.read_from_firestore(
+                    custom_id=response['razorpay_order_id'], collection="payments"))
             data = payment_object['data']
             uid = payment_object['uid']
             # print(json.dumps(data, indent=4))
@@ -323,6 +329,8 @@ def CallbackView():
                 },
                 "Booking": res
             }
+            print("BOOKING SUCCESSS LOGS ================== ")
+            print(json.dumps(payment_object, indent=4))
 
             FIREBASE.write_to_firestore(
                 id=response["razorpay_order_id"], data={"data": json.dumps(payment_object)}, collection="payments")
