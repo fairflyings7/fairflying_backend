@@ -668,7 +668,7 @@ class flight:
 
             if response.status_code == 200:
                 response_data = response.json()
-                print(json.dumps(response_data, indent=4))
+                # print(json.dumps(response_data, indent=4))
                 writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
                             "\n \nResponse\n" + json.dumps(response_data, indent=4), "flight_Search.txt")
                 return response_data

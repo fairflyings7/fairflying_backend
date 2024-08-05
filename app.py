@@ -70,7 +70,7 @@ def editData():
     #     except:
     #         print("data got reset")
     #         return jsonify({"status": False, "desc": "data got reset"}), 400
-    res = FIREBASE.write_to_firestore(auth_header, json.dumps(data))
+    res = FIREBASE.write_to_firestore(auth_header, data)
     if res:
         return jsonify({"status": res}), 200
     else:
@@ -265,7 +265,7 @@ def PaymentView():
 
     # print(json.dumps(body, indent=4))
     FIREBASE.write_to_firestore(
-        id=razorpay_order["id"], data={"order_prep_data": json.dumps(body)}, collection="payments")
+        id=razorpay_order["id"], data={"unparsed_Data": json.dumps(body)}, collection="payments")
 
     mail_body = 'An order is created at Fairflyings with this email address, incase of any doubt please refer to order ID ' + \
         razorpay_order["id"] + " to further refer to this payment"
@@ -285,7 +285,11 @@ def CallbackView():
         # Verifying Payment Signature
         data = razorpay_client.utility.verify_payment_signature(response)
 
+        print(response)
+
         print("Callback hit")
+
+        print(data)
         # if we get here True signature
         if data:
             print(data)
@@ -295,6 +299,8 @@ def CallbackView():
             except:
                 payment_object = json.loads(FIREBASE.read_from_firestore(
                     custom_id=response['razorpay_order_id'], collection="payments"))
+            payment_object = json.loads(payment_object['unparsed_Data'])
+            print(payment_object)
             data = payment_object['data']
             uid = payment_object['uid']
             # print(json.dumps(data, indent=4))
