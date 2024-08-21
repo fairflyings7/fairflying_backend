@@ -1,0 +1,128 @@
+Request
+{
+    "EndUserIp": "1.1.1.1",
+    "ClientId": "180168",
+    "UserName": "Fairfly2",
+    "Password": "Fairfly@22",
+    "TraceId": 69552,
+    "SrdvType": "SingleTB",
+    "SrdvIndex": "SrdvTB",
+    "ResultIndex": 288,
+    "HotelCode": "30656043",
+    "HotelName": "HOTEL PERIDOT",
+    "GuestNationality": "IN",
+    "NoOfRooms": 1,
+    "ClientReferenceNo": 0,
+    "IsVoucherBooking": true,
+    "HotelRoomsDetails": [
+        {
+            "Amenities": [
+                "PARKING,FREE WIFI,DRINKING WATER"
+            ],
+            "Amenity": [],
+            "BedTypes": [],
+            "CancellationPolicies": [
+                {
+                    "Charge": 0,
+                    "ChargeType": 1,
+                    "Currency": "INR",
+                    "FromDate": "2024-08-21T00:00:00",
+                    "ToDate": "2024-08-25T23:59:59"
+                },
+                {
+                    "Charge": 1165,
+                    "ChargeType": 1,
+                    "Currency": "INR",
+                    "FromDate": "2024-08-26T00:00:00",
+                    "ToDate": "2024-08-26T23:59:59"
+                },
+                {
+                    "Charge": 100,
+                    "ChargeType": 2,
+                    "Currency": "INR",
+                    "FromDate": "2024-08-27T00:00:00",
+                    "ToDate": "2024-08-29T23:59:59"
+                }
+            ],
+            "CancellationPolicy": "No cancellation charge, If cancelled between 21-Aug-2024 00:00:00 and 25-Aug-2024 23:59:59.|INR 1165.00 will be charged, If cancelled between 26-Aug-2024 00:00:00 and 26-Aug-2024 23:59:59.|100.00% of total amount will be charged, If cancelled between 27-Aug-2024 00:00:00 and 29-Aug-2024 23:59:59.|#!#",
+            "ChildCount": 0,
+            "HotelSupplements": [],
+            "Inclusion": [
+                "PARKING,FREE WIFI,DRINKING WATER"
+            ],
+            "InfoSource": "FixedCombination",
+            "IsPANMandatory": false,
+            "IsPassportMandatory": false,
+            "LastCancellationDate": "2024-08-25T23:59:59",
+            "Price": {
+                "AgentCommission": 0,
+                "AgentMarkUp": 0,
+                "ChildCharge": 0,
+                "CurrencyCode": "INR",
+                "Discount": 0,
+                "ExtraGuestCharge": 0,
+                "GST": {
+                    "CGSTAmount": 0,
+                    "CGSTRate": 0,
+                    "CessAmount": 0,
+                    "CessRate": 0,
+                    "IGSTAmount": 7.3412,
+                    "IGSTRate": 18,
+                    "SGSTAmount": 0,
+                    "SGSTRate": 0,
+                    "TaxableAmount": 40.78
+                },
+                "OfferedPrice": 1206.05,
+                "OfferedPriceRoundedOff": 1206.05,
+                "OtherCharges": 40.78,
+                "PublishedPrice": 1206.05,
+                "PublishedPriceRoundedOff": 1206,
+                "RoomPrice": 1040.42,
+                "ServiceCharge": 0,
+                "ServiceTax": 7.34,
+                "TDS": 0,
+                "Tax": 124.85,
+                "TotalGSTAmount": 7.3412
+            },
+            "RatePlan": 0,
+            "RatePlanCode": "11718515|197641627|ZTk2ZDJlNjgtYTI3MC05ODFmLTBhMWItMDllMDBjMWM2NWNhOjMzMg==|",
+            "RequireAllPaxDetails": true,
+            "RoomId": 0,
+            "RoomIndex": 1,
+            "RoomPromotion": "Limited Time Offer. Price includes 20% discount!",
+            "RoomStatus": 0,
+            "RoomTypeCode": "480845050|ZTk2ZDJlNjgtYTI3MC05ODFmLTBhMWItMDllMDBjMWM2NWNhOjMzMg==|0",
+            "RoomTypeName": "Deluxe Room",
+            "SequenceNo": "AG~~30656043~0",
+            "SmokingPreference": "NoPreference",
+            "SupplierPrice": null,
+            "HotelPassenger": [
+                {
+                    "Title": "Mr",
+                    "FirstName": "Harsh",
+                    "MiddleName": null,
+                    "LastName": "Agnihotri",
+                    "Phoneno": "8882662421",
+                    "Email": "harshagnihotri90@gmail.com",
+                    "PaxType": "1",
+                    "LeadPassenger": true,
+                    "PassportNo": null,
+                    "PassportIssueDate": null,
+                    "PassportExpDate": null,
+                    "PAN": "XXXXXXXXXX"
+                }
+            ]
+        }
+    ]
+}
+ 
+Response
+{
+    "BookResult": {
+        "Error": {
+            "ErrorCode": 3,
+            "ErrorMessage": "PAN for Passenger 1 in room 1 is not valid."
+        },
+        "ResponseStatus": 3
+    }
+}

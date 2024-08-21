@@ -1,0 +1,229 @@
+Request
+{
+    "EndUserIp": "1.1.1.1",
+    "ClientId": "180168",
+    "UserName": "Fairfly2",
+    "Password": "Fairfly@22",
+    "TraceId": 69552,
+    "SrdvType": "SingleTB",
+    "SrdvIndex": "SrdvTB",
+    "ResultIndex": 288,
+    "HotelCode": "30656043",
+    "HotelName": "HOTEL PERIDOT",
+    "GuestNationality": "IN",
+    "NoOfRooms": 1,
+    "ClientReferenceNo": 0,
+    "IsVoucherBooking": true,
+    "HotelRoomsDetails": [
+        {
+            "Amenities": [
+                "PARKING,FREE WIFI,DRINKING WATER"
+            ],
+            "Amenity": [],
+            "BedTypes": [],
+            "CancellationPolicies": [
+                {
+                    "Charge": 0,
+                    "ChargeType": 1,
+                    "Currency": "INR",
+                    "FromDate": "2024-08-21T00:00:00",
+                    "ToDate": "2024-08-25T23:59:59"
+                },
+                {
+                    "Charge": 1165,
+                    "ChargeType": 1,
+                    "Currency": "INR",
+                    "FromDate": "2024-08-26T00:00:00",
+                    "ToDate": "2024-08-26T23:59:59"
+                },
+                {
+                    "Charge": 100,
+                    "ChargeType": 2,
+                    "Currency": "INR",
+                    "FromDate": "2024-08-27T00:00:00",
+                    "ToDate": "2024-08-29T23:59:59"
+                }
+            ],
+            "CancellationPolicy": "No cancellation charge, If cancelled between 21-Aug-2024 00:00:00 and 25-Aug-2024 23:59:59.|INR 1165.00 will be charged, If cancelled between 26-Aug-2024 00:00:00 and 26-Aug-2024 23:59:59.|100.00% of total amount will be charged, If cancelled between 27-Aug-2024 00:00:00 and 29-Aug-2024 23:59:59.|#!#",
+            "ChildCount": 0,
+            "HotelSupplements": [],
+            "Inclusion": [
+                "PARKING,FREE WIFI,DRINKING WATER"
+            ],
+            "InfoSource": "FixedCombination",
+            "IsPANMandatory": false,
+            "IsPassportMandatory": false,
+            "LastCancellationDate": "2024-08-25T23:59:59",
+            "Price": {
+                "AgentCommission": 0,
+                "AgentMarkUp": 0,
+                "ChildCharge": 0,
+                "CurrencyCode": "INR",
+                "Discount": 0,
+                "ExtraGuestCharge": 0,
+                "GST": {
+                    "CGSTAmount": 0,
+                    "CGSTRate": 0,
+                    "CessAmount": 0,
+                    "CessRate": 0,
+                    "IGSTAmount": 7.3412,
+                    "IGSTRate": 18,
+                    "SGSTAmount": 0,
+                    "SGSTRate": 0,
+                    "TaxableAmount": 40.78
+                },
+                "OfferedPrice": 1206.05,
+                "OfferedPriceRoundedOff": 1206.05,
+                "OtherCharges": 40.78,
+                "PublishedPrice": 1206.05,
+                "PublishedPriceRoundedOff": 1206,
+                "RoomPrice": 1040.42,
+                "ServiceCharge": 0,
+                "ServiceTax": 7.34,
+                "TDS": 0,
+                "Tax": 124.85,
+                "TotalGSTAmount": 7.3412
+            },
+            "RatePlan": 0,
+            "RatePlanCode": "11718515|197641627|ZTk2ZDJlNjgtYTI3MC05ODFmLTBhMWItMDllMDBjMWM2NWNhOjMzMg==|",
+            "RequireAllPaxDetails": true,
+            "RoomId": 0,
+            "RoomIndex": 1,
+            "RoomPromotion": "Limited Time Offer. Price includes 20% discount!",
+            "RoomStatus": 0,
+            "RoomTypeCode": "480845050|ZTk2ZDJlNjgtYTI3MC05ODFmLTBhMWItMDllMDBjMWM2NWNhOjMzMg==|0",
+            "RoomTypeName": "Deluxe Room",
+            "SequenceNo": "AG~~30656043~0",
+            "SmokingPreference": "NoPreference",
+            "SupplierPrice": null,
+            "HotelPassenger": [
+                {
+                    "Title": "Mr",
+                    "FirstName": "Harsh",
+                    "MiddleName": null,
+                    "LastName": "Agnihotri",
+                    "Phoneno": "8882662421",
+                    "Email": "harshagnihotri90@gmail.com",
+                    "PaxType": "1",
+                    "LeadPassenger": true,
+                    "PassportNo": null,
+                    "PassportIssueDate": null,
+                    "PassportExpDate": null,
+                    "PAN": "XXXXXXXXXX"
+                }
+            ]
+        }
+    ]
+}
+ 
+Response
+{
+    "BlockRoomResult": {
+        "Error": {
+            "ErrorCode": 0,
+            "ErrorMessage": ""
+        },
+        "AvailabilityType": "Confirm",
+        "TraceId": "69552",
+        "ResponseStatus": 1,
+        "GSTAllowed": false,
+        "IsPackageDetailsMandatory": false,
+        "IsPackageFare": false,
+        "IsPriceChanged": false,
+        "IsCancellationPolicyChanged": false,
+        "IsHotelPolicyChanged": true,
+        "HotelNorms": "<b>Deluxe Room</b><br/><ul></ul>|Children 0 - 6 year(s) : Stay for free if using existing bedding.|Hotel might ask for supplement gala dinner charges from guest on 24th and 31st December night on direct payment basis. For further clarification please coordinate with hotel directly.|City tax and Resort fee are to be paid directly at hotel if applicable Today tasks .|Most hotels do not allow unmarried / unrelated couples to check-in. This is at full discretion of the hotel management. No refund would be applicable in case the hotel denies check-in under such circumstances.|If your hotel booking includes a complimentary car transfer, you will need to call the hotel directly to let them know your travel details before 24 hrs prior to check in.|Note : Additional GST payment might be collected at the hotel from the customer.| Child charges are not a part of this rate &amp; are payable at the hotel directly. Please get in touch with hotel directly for clarification on child policy.|&lt;strong&gt;&lt;mark&gt;Cancelled and rebooked reservations will be rejected, regardless of the source reported to the hotel.&lt;/mark&gt;&lt;/strong&gt;",
+        "HotelName": "HOTEL PERIDOT",
+        "AddressLine1": "Mahipalpur Mahrauli Marg, Delhi National Territory, New Delhi and NCR, India ZipCode: 110037",
+        "AddressLine2": null,
+        "StarRating": 2,
+        "HotelPolicyDetail": "<b>Deluxe Room</b><br/><ul></ul>|Children 0 - 6 year(s) : Stay for free if using existing bedding.|Hotel might ask for supplement gala dinner charges from guest on 24th and 31st December night on direct payment basis. For further clarification please coordinate with hotel directly.|City tax and Resort fee are to be paid directly at hotel if applicable Today tasks .|Most hotels do not allow unmarried / unrelated couples to check-in. This is at full discretion of the hotel management. No refund would be applicable in case the hotel denies check-in under such circumstances.|If your hotel booking includes a complimentary car transfer, you will need to call the hotel directly to let them know your travel details before 24 hrs prior to check in.|Note : Additional GST payment might be collected at the hotel from the customer.| Child charges are not a part of this rate &amp; are payable at the hotel directly. Please get in touch with hotel directly for clarification on child policy.|&lt;strong&gt;&lt;mark&gt;Cancelled and rebooked reservations will be rejected, regardless of the source reported to the hotel.&lt;/mark&gt;&lt;/strong&gt;",
+        "Latitude": "28.546042170297184",
+        "Longitude": "77.12713758161469",
+        "BookingAllowedForRoamer": false,
+        "HotelRoomsDetails": [
+            {
+                "ChildCount": 0,
+                "RequireAllPaxDetails": true,
+                "RoomId": 0,
+                "RoomStatus": 0,
+                "RoomIndex": 1,
+                "RoomTypeCode": "480845050|ZTk2ZDJlNjgtYTI3MC05ODFmLTBhMWItMDllMDBjMWM2NWNhOjMzMg==|0",
+                "RoomTypeName": "Deluxe Room",
+                "RatePlanCode": "11718515|197641627|ZTk2ZDJlNjgtYTI3MC05ODFmLTBhMWItMDllMDBjMWM2NWNhOjMzMg==|",
+                "RatePlan": 0,
+                "InfoSource": "FixedCombination",
+                "SequenceNo": "AG~~30656043~0",
+                "SupplierPrice": null,
+                "Price": {
+                    "CurrencyCode": "INR",
+                    "RoomPrice": 1040.42,
+                    "Tax": 124.85,
+                    "ExtraGuestCharge": 0,
+                    "ChildCharge": 0,
+                    "OtherCharges": 40.78,
+                    "Discount": 0,
+                    "PublishedPrice": 1206.05,
+                    "PublishedPriceRoundedOff": 1206,
+                    "OfferedPrice": 1206.05,
+                    "OfferedPriceRoundedOff": 1206.05,
+                    "AgentCommission": 0,
+                    "AgentMarkUp": 0,
+                    "ServiceTax": 7.34,
+                    "TDS": 0,
+                    "ServiceCharge": 0,
+                    "TotalGSTAmount": 7.3412,
+                    "GST": {
+                        "CGSTAmount": 0,
+                        "CGSTRate": 0,
+                        "CessAmount": 0,
+                        "CessRate": 0,
+                        "IGSTAmount": 7.3412,
+                        "IGSTRate": 18,
+                        "SGSTAmount": 0,
+                        "SGSTRate": 0,
+                        "TaxableAmount": 40.78
+                    }
+                },
+                "RoomPromotion": "Limited Time Offer. Price includes 20% discount!",
+                "Amenities": [
+                    "PARKING,FREE WIFI,DRINKING WATER"
+                ],
+                "Amenity": [],
+                "SmokingPreference": "NoPreference",
+                "BedTypes": [],
+                "HotelSupplements": [],
+                "LastCancellationDate": "2024-08-25T23:59:59",
+                "IsPassportMandatory": false,
+                "IsPANMandatory": false,
+                "CancellationPolicies": [
+                    {
+                        "Charge": 0,
+                        "ChargeType": 1,
+                        "Currency": "INR",
+                        "FromDate": "2024-08-21T00:00:00",
+                        "ToDate": "2024-08-25T23:59:59"
+                    },
+                    {
+                        "Charge": 1165,
+                        "ChargeType": 1,
+                        "Currency": "INR",
+                        "FromDate": "2024-08-26T00:00:00",
+                        "ToDate": "2024-08-26T23:59:59"
+                    },
+                    {
+                        "Charge": 100,
+                        "ChargeType": 2,
+                        "Currency": "INR",
+                        "FromDate": "2024-08-27T00:00:00",
+                        "ToDate": "2024-08-29T23:59:59"
+                    }
+                ],
+                "CancellationPolicy": "No cancellation charge, If cancelled between 21-Aug-2024 00:00:00 and 25-Aug-2024 23:59:59.|INR 1165.00 will be charged, If cancelled between 26-Aug-2024 00:00:00 and 26-Aug-2024 23:59:59.|100.00% of total amount will be charged, If cancelled between 27-Aug-2024 00:00:00 and 29-Aug-2024 23:59:59.|#!#",
+                "Inclusion": [
+                    "PARKING,FREE WIFI,DRINKING WATER"
+                ]
+            }
+        ]
+    }
+}

@@ -70,7 +70,7 @@ def editData():
     #     except:
     #         print("data got reset")
     #         return jsonify({"status": False, "desc": "data got reset"}), 400
-    res = FIREBASE.write_to_firestore(auth_header, data)
+    res = FIREBASE.write_to_firestore(auth_header, {"data": json.dumps(data)})
     if res:
         return jsonify({"status": res}), 200
     else:
@@ -83,6 +83,9 @@ def get_items():
     if not FIREBASE.check_user_exists(auth_header):
         return jsonify({"status": "fail", "Description": "user doesnt exist"}), 200
     res = FIREBASE.read_from_firestore(custom_id=auth_header)
+    if res:
+        if res["data"]:
+            res = json.loads(res["data"])
     return jsonify(res), 200
 
 
