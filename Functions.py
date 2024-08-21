@@ -114,6 +114,9 @@ class Hotels:
 
             if response.status_code == 200:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "hotel_search.txt")
+
                 return response_data
 
             else:
@@ -144,6 +147,9 @@ class Hotels:
 
             if response.status_code == 200:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "hotel_info.txt")
+
                 return response_data
 
             else:
@@ -172,6 +178,9 @@ class Hotels:
 
             if response.status_code == 200:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "hotel_room_Info.txt")
+
                 return response_data
             else:
                 return {"Error": f"{response.status_code} - {response.text}", "headers_passed": headers, "data_passed": payload_data}
@@ -287,6 +296,7 @@ class Hotels:
         if data:
             payload_data = {**head, **data}
         else:
+            return {"Error": "data not passed"}
             payload_data = {**head, **sampleData}
 
         try:
@@ -296,6 +306,9 @@ class Hotels:
 
             if response.status_code == 200:
                 response_data = response.json()
+
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "hotel_Block.txt")
                 return response_data
 
             else:
@@ -413,6 +426,7 @@ class Hotels:
         if data:
             payload_data = {**head, **data}
         else:
+            return {"Error": "Data not passed"}
             payload_data = {**head, **sampleData}
         # print(json.dumps(payload_data, indent=4))
         try:
@@ -422,6 +436,9 @@ class Hotels:
 
             if response.status_code == 200:
                 response_data = response.json()
+
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "hotel_Booking.txt")
                 return response_data
 
             else:
@@ -500,6 +517,9 @@ class Bus:
 
             if response.status_code == 200:
                 response_data = response.json()
+
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "bus_Search.txt")
                 return response_data
 
             else:
@@ -528,6 +548,9 @@ class Bus:
 
             if response.status_code == 200:
                 response_data = response.json()
+
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "bus_Seat_layout.txt")
                 return response_data
 
             else:
@@ -557,6 +580,9 @@ class Bus:
 
             if response.status_code == 200:
                 response_data = response.json()
+
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "bus_Boarding_Pts.txt")
                 return response_data
 
             else:
@@ -582,6 +608,10 @@ class Bus:
 
         if response.status_code == 200:
             response_data = response.json()
+
+            writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                        "\n \nResponse\n" + json.dumps(response_data, indent=4), "bus_Booking.txt")
+
             return response_data
 
         else:
@@ -600,6 +630,8 @@ class Bus:
         if response.status_code == 200:
             try:
                 response_data = response.json()
+                writeToFile("Request\n"+json.dumps(payload_data, indent=4) +
+                            "\n \nResponse\n" + json.dumps(response_data, indent=4), "bus_Block.txt")
                 return response_data
             except Exception as e:
                 print("error at fare quote", e)
@@ -988,10 +1020,15 @@ class firebase:
             return None
 
     def write_to_firestore(self, id, data, collection="user_data"):
-        doc_ref = self.db.collection(collection).document(id)
-        doc_ref.set(data)
+        try:
+            doc_ref = self.db.collection(collection).document(id)
+            doc_ref.set(data)
+            return True
+        except Exception as e:
+            print(json.dumps(data, indent=4))
+            print(e)
         # print("Document '{}' written to Firestore.".format(id))
-        return True
+            return False
 
     def read_from_firestore(self, custom_id, collection="user_data"):
         doc_ref = self.db.collection(collection).document(custom_id)
