@@ -359,7 +359,8 @@ def CallbackView():
                 FIREBASE.write_to_firestore(
                     id=uid, data={"data": json.dumps(payment_object)}, collection="user_data")
 
-            mail_body = 'Your order by Fairflyings has been placed successfully. please use the visit '+os.getenv("WEB_URL")+'/BookingSuccessfull?data=&orderId=order_O6qHcIfjlOsfF7' + \
+            mail_body = 'Your order by Fairflyings has been placed successfully. please use the visit ' + \
+                os.getenv("WEB_URL")+'/booking-success?order_id=' + \
                 response['razorpay_order_id'] + \
                 " to further refer to this payment"
             send_email(email=payment_object["metadata"]["email"],
