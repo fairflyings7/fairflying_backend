@@ -84,8 +84,11 @@ def get_items():
         return jsonify({"status": "fail", "Description": "user doesnt exist"}), 200
     res = FIREBASE.read_from_firestore(custom_id=auth_header)
     if res:
-        if res["data"]:
-            res = json.loads(res["data"])
+        try:
+            if res["data"]:
+                res = json.loads(res["data"])
+        except:
+            pass
     return jsonify(res), 200
 
 
