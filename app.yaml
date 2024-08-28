@@ -1,5 +1,7 @@
-runtime:python310
+runtime: python39 # Specifies the Python runtime version
+
+entrypoint: gunicorn -b :$PORT main:app # Command to start your Flask API
 
 handlers:
-- url: /.*
-  scripts: main.app
+  - url: /.* # Routes all requests to your Flask API
+    script: auto
