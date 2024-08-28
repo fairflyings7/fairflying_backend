@@ -3,5 +3,4 @@ flask-cors
 flask-mail
 razorpay
 firebase-admin
-dotenv
-firebase
+python-dotenv
