@@ -9,7 +9,7 @@ import io
 import os
 import json
 
-from Functions import Hotels, Bus, flight, firebase
+from Functions import Hotels, Bus, flight, firebase, get_ip_address
 HOTELS = Hotels()
 BUS = Bus()
 FLIGHT = flight()
@@ -51,6 +51,12 @@ def send_email(email, subject, body):
 @app.route('/')
 def health():
     return "hi", 200
+
+
+@app.route('/get-device-ip')
+def ipGetter():
+    ip = get_ip_address()["ip"]
+    return jsonify({"ip": ip}), 200
 
 
 @app.route('/editData', methods=['POST'])
